@@ -12,5 +12,6 @@ export default {
 <style scoped>
 .btn {
     background: url("~@/assets/icons/rejectButton.svg");
+    background-repeat: no-repeat;
 }
 </style>

@@ -12,6 +12,7 @@ export default {
 <style scoped>
 .btn {
     background: url("~@/assets/icons/heartButton.svg");
+    background-repeat: no-repeat;
 }
 
 

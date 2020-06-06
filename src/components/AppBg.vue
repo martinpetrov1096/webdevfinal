@@ -28,7 +28,8 @@ export default {
   top: 0;
   width: 50%;
   height: 100%;
-  transition: all .5s cubic-bezier(.74,-0.02,.64,.22)  .1s;
+  transition: all .5s ease-out;
+  transition-delay: .2s;
 }
 .nill-bg {
   z-index: -2 !important;
