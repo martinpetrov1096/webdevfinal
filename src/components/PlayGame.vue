@@ -22,6 +22,15 @@ export default {
 
 <style scoped>
 
+#playGame {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
 .card {
     height: 80%;
     min-width: 400px;

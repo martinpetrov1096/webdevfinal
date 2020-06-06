@@ -4,13 +4,13 @@
 
     <div v-if="state==0" class="flex" id="app">
       <div class="lobby card shadow-l">
-        <button class="button primary"> New Game</button>
-        <button class="button secondary"> Join Game</button>
+        <button class="button primary" @click="state=1"> New Game</button>
+        <button class="button secondary" @click="state=1"> Join Game</button>
       </div>
     </div>
-    <div v-else class="flex">
+    <div v-else class="game">
 
-      <play-game class="main" :class="{'lefts': bgColor=='green'}" ></play-game>
+      <play-game></play-game>
      
     </div>
 
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       bgColor: "red",
-      state: 0,
+      state: 1,
     }
   },
   methods: {
@@ -47,6 +47,7 @@ body,
 html,
 .bg,
 .flex,
+.game,
 #app
 {
   width: 100%;
