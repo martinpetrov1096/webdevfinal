@@ -20,7 +20,7 @@
 }
 .button {
     align-self: center;
-    width: 100px;
+    width: 120px;
     height: 60px;
     outline: none;
     border: none;
@@ -29,3 +29,21 @@
     color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
 }
+
+/*******************************/
+/********** COLORS *************/
+/*******************************/
+.primary {
+    background-color: #f50057;
+}
+.primary-text {
+    color: #f50057;
+}
+.secondary {
+    background-color: #29434e;
+}
+.secondary-text {
+    background-color: #29434e;
+}
+
+

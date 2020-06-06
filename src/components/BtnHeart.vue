@@ -1,16 +1,18 @@
 <template>
-    <div id="rejectBtn" class="btn"></div>
+    <div id="btnHeart" class="btn"></div>
 </template>
 
 <script>
-
 import "@/assets/css/btn.css";
 export default {
-    name: "RejectBtn"
+    name: "BtnHeart"
 }
 </script>
+
 <style scoped>
 .btn {
-    background: url("~@/assets/icons/rejectButton.svg");
+    background: url("~@/assets/icons/heartButton.svg");
 }
+
+
 </style>

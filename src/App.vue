@@ -3,34 +3,37 @@
     <app-bg v-bind:fill="bgColor" class="bg"></app-bg>
 
     <div v-if="state==0" class="flex" id="app">
+      <div class="lobby card shadow-l">
+        <button class="button primary"> New Game</button>
+        <button class="button secondary"> Join Game</button>
+      </div>
     </div>
     <div v-else class="flex">
-      <reject-btn @click.native="bgColor='red'"></reject-btn>
-      <card class="main" :class="{'lefts': bgColor=='green'}" ></card>
-      <heart-btn  @click.native="bgColor='green'"></heart-btn>
+
+      <play-game class="main" :class="{'lefts': bgColor=='green'}" ></play-game>
+     
     </div>
 
   </div>
 </template>
 
 <script>
-import "@/assets/css/reset.css"
-import Card from "@/components/Card.vue";
-import HeartBtn from "@/components/HeartBtn.vue";
-import RejectBtn from "@/components/RejectBtn.vue";
+import "@/assets/css/global.css";
+import "@/assets/css/reset.css";
+import PlayGame from "@/components/PlayGame.vue";
 import AppBg from "@/components/AppBg.vue";
+
+
 export default {
   name: 'App',
   components: {
-    Card,
-    HeartBtn,
-    RejectBtn,
+    PlayGame,
     AppBg,
   },
   data() {
     return {
       bgColor: "red",
-      state: 1,
+      state: 0,
     }
   },
   methods: {
@@ -56,45 +59,11 @@ html,
   align-items: center;
 }
 
-/*
-.main {
-  flex-grow: 1;
-  margin: 50px;
-
-  transition: all .4s ease-in-out ;
-
-    left: 0;
-    right: 0;
-
+.lobby {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
 }
 
-
-
-
-
-
-.lefts {
-
-
-  animation: left 1s;
-  position: relative;
-}
-
-@keyframes left {
-  25% {
-    left: 600px;
-  }
-  50% {
-    transform: rotate(35deg);
-  }
-  75% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-      transform: rotate(0deg);
-      left: 0;
-  }
-}
-*/
 </style>
