@@ -13,11 +13,18 @@
     <div class="searchBar">
       <h2>Create New Game </h2>
       <input
-        v-model="searchText"
         type="text"
+        list="terms"
         id="input-search"
-        placeholder="Terms"
+        v-model="searchText"
+        placeholder="Enter Keywords"
+        @keyup="getRecommended"
       />
+      
+      <datalist id="terms">
+        <option v-for="term in autoComplete" :key="term.text">{{term.text}}</option>
+      </datalist>
+            
       <vue-google-autocomplete
         v-on:placechanged="getAddressData"
         ref="address"
@@ -28,17 +35,7 @@
         types= "(cities)"
       >
       </vue-google-autocomplete>
-      <label for="input-range">Distance: {{this.searchRange}} miles</label>
-      <input
-        v-model="searchRange"
-        type="range"
-        max="1000"
-        min="100"
-        step="50"
-        id="input-range"
-        placeholder="Radius"
-      />
-    <button variant="primary" @click="grabInfo()">Go!</button>
+    <button variant="primary" @click="createGame()">Go!</button>
     </div>
   </div>
 </template>
@@ -54,51 +51,37 @@ export default {
   data() {
     return {
       searchText: "",
-      searchRange: 1000,
       address: null,
       joinCode: "",
-      isJoining: false,
+      autoComplete: []
     };
   },
   methods: {
-    grabInfo() {
-      if (this.searchText != "") {
-        axios.get(
-          "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?" +
-          "term=" + //TODO: why not add to previous line
-          this.searchText +
-          "&latitude=" +
-          this.address.latitude +
-          "&longitude=" +
-          this.address.longitude +
-          "&radius=" +
-          this.searchRange +
-          "&limit=10",
-          {
-            headers: {
-              Authorization: "Bearer bAkiVlxtBVivppxkygEvcx_ZkdkDIhrtLFfkJWRv7HWG45Yn_gnwcvtuMgaCDHjvnXLq2tYyuKpwyogcYg4pV-0HBvvf-41JJignaUhc9GhyKMzx3v8kA5FhHM_OXnYx"
-            }
-          })
-          .then(resp => { //TODO: won't res always be true if u have .then?
-            if (resp) {
-              this.createGame(resp.data.businesses);
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else {
-        alert("Search is empty");
-      }
-    },
     getAddressData: function (addressData) { //TODO: can we remove this?
       this.address = addressData;
     },
-    createGame(list) {
+    getRecommended: function() {
+      const url = `https://cors-anywhere.herokuapp.com/https://functional-opaque-kosmoceratops.glitch.me/autocomplete`;
+      axios.get(url,
+        {
+          params: {
+            "keyword": this.searchText
+            }
+        })
+        .then(resp => {
+          this.autoComplete = resp.data;
+        });
+    },
+    createGame() {
+      let payload = {
+        "searchText": this.searchText,
+        "latitude": this.address.latitude,
+        "longitude": this.address.longitude
+      }
       axios({
-        url: "https://cors-anywhere.herokuapp.com/https://tested-quilled-regnosaurus.glitch.me/newGame",
+        url: "https://cors-anywhere.herokuapp.com/https://functional-opaque-kosmoceratops.glitch.me/newGame",
         method: "post",
-        data: list
+        data: payload
       })
       .then(resp => {
         this.joinCode = resp.data;

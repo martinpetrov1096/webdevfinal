@@ -3,7 +3,7 @@
     <app-bg :fill="bgColor" class="bg"></app-bg>
     <transition name="slide-fade" mode="out-in">
         <game-pre v-if="state==0" @clicked="joinGame"></game-pre>
-        <game-play v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event"></game-play>
+        <game-play class="game" v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event"></game-play>
     </transition>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       bgColor: "red",
-      state: 0,
+      state: 1,
       view: "",
       joinCode: ""
     }
@@ -76,6 +76,14 @@ html,
 
 
 
+@media only screen and (max-width: 400px) {
+
+  .game {
+    flex-flow: row wrap;
+    width:95%;
+  }
+
+}
 
 
 

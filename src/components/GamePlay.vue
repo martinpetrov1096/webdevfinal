@@ -1,20 +1,15 @@
 <template>
-  <div id="gamePlay">
-    <btn-reject :visible="playing" @click.native="submitVote(0)"></btn-reject>
+  <div class="gamePlay">
+    <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
     <transition name="morph">  
-      <div v-if="playing" key="play" :class="{'yes': submitted==2, 'no': submitted==1}" class="game card-lg shadow-l">
+      <div v-if="playing" key="play" :class="{'yes': bgColor=='green', 'no': bgColor=='red'}" class="game card-lg shadow-l">
 
-        <div v-if="submitted==0" class ="front">
+        <div v-if="!submitted" class ="front">
           <img v-bind:src="this.current.image_url" class="rest-img">
-          <p>{{this.current.name}}  {{this.current.price}}</p>
-          <p>Rating {{this.current.rating}}</p>
-          <p>Address {{this.current.location.display_address}}</p>
-          <p>Review Count {{this.current.review_count}}</p>
         </div>
         <div v-else class="back">
           <h2> Waiting for other players to vote </h2>
         </div>
-
 
       </div>
       <div v-else key="lobby" class="lobby card-sm shadow-l">
@@ -22,7 +17,7 @@
         <button type="button" @click="startGame('yes')">Start Game</button>
       </div>
     </transition>
-    <btn-heart :visible="playing" @click.native="submitVote(1)"></btn-heart>
+    <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
   </div>
 </template>
 
@@ -39,10 +34,11 @@ export default {
   components : {BtnHeart, BtnReject},
   data() {
     return {
-      playing: false,
-      socket : io("https://tested-quilled-regnosaurus.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
+      playing: true,
+      socket : io("https://functional-opaque-kosmoceratops.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
       current : "",
-      submitted: 0
+      submitted: false,
+      bgColor: ""
     };
   },
 
@@ -51,26 +47,25 @@ export default {
       this.socket.emit("startGame");
     },
     
-    submitVote(vote){
+    submitVote(vote) {
+
       switch(vote) {
         case 0: 
-          this.submitted=1;
-          setTimeout(()=> {
-            this.$emit("bg", "red");
-          },300);
+            this.bgColor = "red";
           break;
         case 1: 
-          this.submitted=2;
-          setTimeout(()=> {
-            this.$emit("bg", "green");
-          },300);
+            this.bgColor = "green";
           break;
       }
+      this.submitted= true;
 
+      setTimeout(() => {
+        this.$emit("bg", this.bgColor);
+      },300);
+     
       setTimeout(()=> {
         this.socket.emit("submitVote", vote);
-        this.submitted = 0;
-             // this.$emit('bg', ""); //TODO: added temp
+        this.submitted = false;
       }, 2000);
     }
   },
@@ -99,7 +94,7 @@ export default {
 
 <style scoped>
 
-#gamePlay {
+.gamePlay {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -112,10 +107,24 @@ export default {
 
 
 
+@media only screen and (max-width: 400px) {
+
+  .gamplay {
+    flex-flow: row wrap;
+    background-color: black;
+  }
+  .game {
+    order: -2;
+  }
+
+}
+
+@media only screen and (min-width: 601px) {
 
 
+}
 
-
+  
 
 /* Submit Animation */
 .yes {
