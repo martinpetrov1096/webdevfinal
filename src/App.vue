@@ -1,36 +1,25 @@
 <template>
   <div id="app">
-    <app-bg v-bind:fill="bgColor" class="bg"></app-bg>
-    
-    <div class="card pre-game shadow-l">
-      <transition name="slide-fade" mode="out-in">
-          <div v-if="state==0">
-            <game-join @code="initGame"></game-join>
-            <search-bar @results="createGame"></search-bar>
-          </div>
-          <game-play v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event"></game-play>
-      </transition>
-    </div>
-
+    <app-bg :fill="bgColor" class="bg"></app-bg>
+    <transition name="slide-fade" mode="out-in">
+        <game-pre v-if="state==0" @clicked="joinGame"></game-pre>
+        <game-play v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event"></game-play>
+    </transition>
   </div>
 </template>
 
 <script>
-import "@/assets/css/reset.css";
 import "@/assets/css/global.css";
-
+import "@/assets/css/reset.css";
 import GamePlay from "@/components/GamePlay.vue";
-import GameJoin from "@/components/GameJoin.vue";
-import SearchBar from "@/components/SearchBar.vue";
+import GamePre from "@/components/GamePre.vue";
 import AppBg from "@/components/AppBg.vue";
-import axios from "axios";
 
 export default {
   name: 'App',
   components: {
     GamePlay,
-    GameJoin,
-    SearchBar,
+    GamePre,
     AppBg,
   },
   data() {
@@ -42,27 +31,11 @@ export default {
     }
   },
   methods: {
-    createGame(list) {
-      var payload = list;
-      axios({
-        url: 'https://cors-anywhere.herokuapp.com/https://tested-quilled-regnosaurus.glitch.me/newGame',
-        method: 'post',
-        data: payload
-      })
-      .then(response => {
-        this.joinCode = response.data;
-        this.initGame(this.joinCode);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    },
-    initGame (code) {
+    joinGame(code) {
+      console.log(code);
       this.joinCode = code;
       this.state = 1;
-
-
-    },
+    }
   }
 }
 </script>
@@ -73,7 +46,6 @@ export default {
 body,
 html,
 .bg,
-.flex,
 #app
 {
   width: 100%;
@@ -82,15 +54,10 @@ html,
 
 #app {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
-.pre-game {
-  
-
-  padding: 30px;
-}
 
 .slide-fade-enter-active {
     transition: all .2s ease-out;
@@ -117,6 +84,48 @@ html,
 
 
 
+
+
+.morph-enter {
+  opacity: 0;
+} 
+
+.morph-enter-active {
+  transition: opacity .4s linear .6s;
+  position: absolute !important;
+}
+
+.morph-leave {
+  opacity: 1;
+} 
+
+.morph-leave-active {
+  position: absolute !important;
+  animation:  scaleUp .4s;
+  animation-delay: .2s;
+  animation-fill-mode: forwards;
+
+  transition: opacity .4s linear .6s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
+
+}
+
+.morph-leave-active > * {
+    opacity: 0;
+    transition: all .2s linear;
+    transform: translateY(-15px);
+}
+
+
+@keyframes scaleUp {
+  0% {
+    transform: scale();
+  }
+
+  100% {
+    transform: scaleY(1.5);
+  }
+}
 
 
 

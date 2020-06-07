@@ -66,8 +66,7 @@ export default {
               "&limit=10",
             {
               headers: {
-                Authorization:
-                  "Bearer bAkiVlxtBVivppxkygEvcx_ZkdkDIhrtLFfkJWRv7HWG45Yn_gnwcvtuMgaCDHjvnXLq2tYyuKpwyogcYg4pV-0HBvvf-41JJignaUhc9GhyKMzx3v8kA5FhHM_OXnYx"
+                Authorization: "Bearer bAkiVlxtBVivppxkygEvcx_ZkdkDIhrtLFfkJWRv7HWG45Yn_gnwcvtuMgaCDHjvnXLq2tYyuKpwyogcYg4pV-0HBvvf-41JJignaUhc9GhyKMzx3v8kA5FhHM_OXnYx"
               }
             }
           )

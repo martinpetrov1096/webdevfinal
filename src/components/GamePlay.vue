@@ -1,43 +1,37 @@
 <template>
-      <transition name="morph" mode="out-in">
-        <div v-if="lobby" class="card shadow-1">
-          <p>
-            In Lobby for game {{this.joinCode}}
-          </p>
-          
-          <button type="button" @click="startGame()">Start Game</button>
-        </div>
-        
-        <div v-else id="playGame">
-          
-          <btn-reject @click.native="submitVote('no')"></btn-reject>
-          <div class="card shadow-l">
-            <img v-bind:src="this.current.image_url" alt="" width="400px">
-            <p>{{this.current.name}}  {{this.current.price}}</p>
-            <p>Rating {{this.current.rating}}</p>
-            <p>Address {{this.current.location.display_address}}</p>
-            <p>REview Count {{this.current.review_count}}</p>
-          </div>
-          <btn-heart  @click.native="submitVote('yes')"></btn-heart>
-    
-        </div>
-      
-
-      </transition>
+  <div id="gamePlay">
+    <btn-reject :visible="playing" @click.native="submitVote('no')"></btn-reject>
+    <transition name="morph">  
+      <div v-if="playing" key="play" class="game card-lg shadow-l">
+         <img v-bind:src="this.current.image_url" class="rest-img">
+          <p>{{this.current.name}}  {{this.current.price}}</p>
+          <p>Rating {{this.current.rating}}</p>
+          <p>Address {{this.current.location.display_address}}</p>
+          <p>REview Count {{this.current.review_count}}</p>
+      </div>
+      <div v-else key="lobby" class="lobby card-sm shadow-l">
+        <p>In Lobby for game {{this.joinCode}}</p>
+        <button type="button" @click="startGame('yes')">Start Game</button>
+      </div>
+    </transition>
+    <btn-heart :visible="playing" @click.native="submitVote('yes')"></btn-heart>
+  </div>
 </template>
+
 <script>
-  
+import "@/assets/css/reset.css";
+
 import io from 'socket.io-client';
 import BtnHeart from "@/components/BtnHeart.vue";
 import BtnReject from "@/components/BtnReject.vue";
 
 export default {
-  name: "PlayGame",
+  name: "GamePlay",
   props: ['joinCode'],
   components : {BtnHeart, BtnReject},
   data() {
     return {
-      lobby: true,
+      playing: false,
       socket : io("https://tested-quilled-regnosaurus.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
       current : ""
     };
@@ -49,12 +43,16 @@ export default {
     },
     
     submitVote(vote){
-      if (vote == 'yes'){
-        this.socket.emit("submitVote", 1);
+
+      if (vote == "yes"){
         this.$emit('bg', "green");
+        this.socket.emit("submitVote", 1);
+ 
       } else {
+        console.log("hellothere");
+        this.$emit("bg", "red");
         this.socket.emit("submitVote", 0);
-        this.$emit('bg', "red");
+
       }
     }
   },
@@ -62,16 +60,15 @@ export default {
     this.socket.emit("joinGame");
     
     this.socket.on("joinedGame", () => {
-      this.lobby=true;
     });
     
     this.socket.on("startedGame", () => {
-      this.lobby=false;
+      this.playing=true;
     });
     
     this.socket.on("nextChoice", data => {
       this.current = data["restaurant"];
-      this.$emit('bg', "neither");
+      this.$emit('bg', "");
     });
     
     this.socket.on("endedGame", data => {
@@ -84,24 +81,28 @@ export default {
 
 <style scoped>
 
-#playGame {
-    width: 100%;
-    height: 100%;
+#gamePlay {
     display: flex;
     justify-content: space-around;
     align-items: center;
    
 }
 
-.card {
-
-    width: 400px;
-    height: 400px;
-    
+.rest-img {
+  height: 200px;
 }
 
 
 
+@keyframes scaleUp {
+  0% {
+    transform: scale();
+  }
+
+  100% {
+    transform: scaleY(1.5);
+  }
+}
 
 .morph-enter {
   opacity: 0;
@@ -133,16 +134,6 @@ export default {
     transform: translateY(-15px);
 }
 
-
-@keyframes scaleUp {
-  0% {
-    transform: scale();
-  }
-
-  100% {
-    transform: scaleY(1.5);
-  }
-}
 
 
 

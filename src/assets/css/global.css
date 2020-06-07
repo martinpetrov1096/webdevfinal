@@ -2,8 +2,18 @@
 /*******************************/
 /********* CUSTOM TYPES ********/
 /*******************************/
-.card {
+.card-sm {
+    width: 300px;
+    height: 300px;
     border-radius: 30px;
+    padding: 50px;
+    background-color: #f5f5f5;
+}
+.card-lg {
+    width: 300px;
+    height: 500px;
+    border-radius: 30px;
+    padding: 50px;
     background-color: #f5f5f5;
 }
 .shadow-s {
@@ -33,6 +43,15 @@
 /*******************************/
 /********** COLORS *************/
 /*******************************/
+.bg-green {
+    background: #37DB73;
+}
+
+.bg-red {
+    background: #FF616F;
+}
+
+
 .primary {
     background-color: #f50057;
 }

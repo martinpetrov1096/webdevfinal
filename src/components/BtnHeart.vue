@@ -1,11 +1,14 @@
 <template>
-    <div id="btnHeart" class="btn"></div>
+    <div :class="{'hidden': !visible}" id="btnHeart" class="btn"></div>
 </template>
 
 <script>
 import "@/assets/css/btn.css";
 export default {
-    name: "BtnHeart"
+    name: "BtnHeart",
+    props: {
+        visible: Boolean
+    }
 }
 </script>
 
@@ -13,7 +16,10 @@ export default {
 .btn {
     background: url("~@/assets/icons/heartButton.svg");
     background-repeat: no-repeat;
+        transition: all .2s ease-out;
 }
-
+.hidden {
+    opacity: 0;
+}
 
 </style>

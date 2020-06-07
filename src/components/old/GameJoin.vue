@@ -3,7 +3,7 @@
         <input
             placeholder="Enter Code" 
             v-model="joinCode">
-        <button @click="joinGame()">Join Game</button>
+        <button @click="joinGame">Join Game</button>
     </div>
 </template>
 
