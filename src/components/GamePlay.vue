@@ -1,6 +1,6 @@
 <template>
   <div id="gamePlay">
-    <btn-reject :visible="playing" @click.native="submitVote('no')"></btn-reject>
+    <btn-reject :visible="playing" @click.native="submitVote(0)"></btn-reject>
     <transition name="morph">  
       <div v-if="playing" key="play" class="game card-lg shadow-l">
          <img v-bind:src="this.current.image_url" class="rest-img">
@@ -14,7 +14,7 @@
         <button type="button" @click="startGame('yes')">Start Game</button>
       </div>
     </transition>
-    <btn-heart :visible="playing" @click.native="submitVote('yes')"></btn-heart>
+    <btn-heart :visible="playing" @click.native="submitVote(1)"></btn-heart>
   </div>
 </template>
 
@@ -43,17 +43,17 @@ export default {
     },
     
     submitVote(vote){
-
-      if (vote == "yes"){
-        this.$emit('bg', "green");
-        this.socket.emit("submitVote", 1);
- 
-      } else {
-        console.log("hellothere");
-        this.$emit("bg", "red");
-        this.socket.emit("submitVote", 0);
-
+      switch(vote) {
+        case 0: 
+          this.$emit('bg', "red");
+          break;
+        case 1: 
+          this.$emit('bg', "green");
+          break;
       }
+      setTimeout(()=> {
+        this.socket.emit("submitVote", vote);
+      }, 1000);
     }
   },
   mounted() {

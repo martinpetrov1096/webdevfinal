@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import "@/assets/css/global.css";
-import "@/assets/css/reset.css";
+
 import GamePlay from "@/components/GamePlay.vue";
 import GamePre from "@/components/GamePre.vue";
 import AppBg from "@/components/AppBg.vue";

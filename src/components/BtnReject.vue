@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'hidden': !visible}" id="btnReject" class="btn"></div>
+    <div :class="{'vis': visible}" id="btnReject" class="btn"></div>
 </template>
 
 <script>
@@ -16,10 +16,10 @@ export default {
 .btn {
     background: url("~@/assets/icons/rejectButton.svg");
     background-repeat: no-repeat;
-    transition: all 2s ease-out;
+    opacity: 0;
 }
 
-.hidden {
-    opacity: 0;
+.vis {
+    opacity: 1;
 }
 </style>

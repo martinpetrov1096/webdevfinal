@@ -1,7 +1,9 @@
+import "@/assets/css/reset.css";
+import "@/assets/css/global.css";
+
+
 import Vue from 'vue'
 import App from './App.vue'
-
-
 
 
 Vue.config.productionTip = false
