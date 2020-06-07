@@ -1,5 +1,5 @@
 <template>
-  <div class="gamePlay">
+  <div id="gamePlay">
     <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
     <transition name="morph">  
       <div v-if="playing" key="play" :class="{'yes': bgColor=='green', 'no': bgColor=='red'}" class="game card-lg shadow-l">
@@ -94,11 +94,23 @@ export default {
 
 <style scoped>
 
-.gamePlay {
+#gamePlay {
     display: flex;
+    flex-flow: row wrap;
     justify-content: space-around;
     align-items: center;
    
+}
+
+
+@media only screen and (max-width: 680px) {
+
+
+  .game {
+    order: -1;
+    flex-basis: 80%;
+  }
+
 }
 
 .rest-img {
@@ -107,22 +119,6 @@ export default {
 
 
 
-@media only screen and (max-width: 400px) {
-
-  .gamplay {
-    flex-flow: row wrap;
-    background-color: black;
-  }
-  .game {
-    order: -2;
-  }
-
-}
-
-@media only screen and (min-width: 601px) {
-
-
-}
 
   
 
@@ -151,7 +147,7 @@ export default {
     transform: translateX(400px) rotate(45deg) rotateY(180deg);
   }
   100% {
-    transform: rotateY(180deg);
+    transform: translateX(0) rotateY(180deg);
   }
 }
 @keyframes no {
@@ -161,7 +157,7 @@ export default {
     transform: translateX(-400px) rotate(-45deg) rotateY(180deg);
   }
   100% {
-    transform: rotateY(180deg);
+    transform: translateX(0) rotateY(180deg);
   }
 }
 
