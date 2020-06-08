@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import "@/assets/css/btn.css";
 export default {
     name: "BtnHeart",
     props: {
@@ -14,9 +13,15 @@ export default {
 
 <style scoped>
 .btn {
+    width: 100px;
+    height: 100px;
+    outline: none;
+    border: none;
+    border-radius: 100%;  
+
     background: url("~@/assets/icons/heartButton.svg");
     background-repeat: no-repeat;
-        transition: all .2s ease-out;
+    transition: all .2s ease-out;
 }
 .hidden {
     opacity: 0;

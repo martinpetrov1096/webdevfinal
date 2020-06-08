@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css');
 body {
     font-family: 'Lato', sans-serif;
 }
@@ -20,21 +22,13 @@ body {
     padding: 50px;
     background-color: #f5f5f5;
 }
-
-
-
-
-
 .shadow-s {
-  
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
 }
 .shadow-m {
-   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 .shadow-l {
-
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 .button {
@@ -43,102 +37,33 @@ body {
     height: 60px;
     outline: none;
     border: none;
-    border-radius: 10px;
+    border-radius: 50%;
     font-size: 18px;
     color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
 }
 
 /*******************************/
-/********** COLORS *************/
-/*******************************/
-.bg-green {
-    background: #37DB73;
-}
-
-.bg-red {
-    background: #FF616F;
-}
-
-
-.primary {
-    background-color: #f50057;
-}
-.primary-text {
-    color: #f50057;
-}
-.secondary {
-    background-color: #29434e;
-}
-.secondary-text {
-    background-color: #29434e;
-}
-
-
-/*******************************/
 /********* Animations **********/
 /*******************************/
 
+.in-out {
+    transition: all .5s ease-in-out;
+}
 .slide-fade-enter-active {
     transition: all .2s ease-out;
 }
 .slide-fade-leave-active {
     transition: all .2s ease-in;
-  }
+}
   .slide-fade-enter {
     transform: translateY(15px);
     opacity: 0;
-  } 
+} 
   .slide-fade-leave-to {
     transform: translateY(-15px);
     opacity: 0;
-  }
-
-
-
-
-
-
-
-
-.morph-enter {
-  opacity: 0;
-} 
-
-.morph-enter-active {
-  transition: opacity .4s linear .6s;
-  position: absolute !important;
 }
-
-.morph-leave {
-  opacity: 1;
-} 
-
-.morph-leave-active {
-  position: absolute !important;
-  animation:  scaleUp .4s;
-  animation-delay: .2s;
-  animation-fill-mode: forwards;
-
-  transition: opacity .4s linear .6s;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
-
-}
-
-.morph-leave-active > * {
-    opacity: 0;
-    transition: all .2s linear;
-    transform: translateY(-15px);
-}
-
-
-@keyframes scaleUp {
-
-  100% {
-    transform: scaleY(1);
-  }
-}
-
 
 /*******************************/
 /******** Mobile Device ********/
@@ -150,7 +75,7 @@ body {
     }
     .card-sm {
         width: 90%;
-        height: calc(80% - 250px);
+        height: calc(70% - 250px);
     }    
     
 }

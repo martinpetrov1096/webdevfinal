@@ -4,7 +4,6 @@
 
 <script>
 
-import "@/assets/css/btn.css";
 export default {
     name: "BtnReject",
     props: {
@@ -14,6 +13,11 @@ export default {
 </script>
 <style scoped>
 .btn {
+    width: 100px;
+    height: 100px;
+    outline: none;
+    border: none;
+    border-radius: 100%;  
     background: url("~@/assets/icons/rejectButton.svg");
     background-repeat: no-repeat;
     opacity: 0;

@@ -1,22 +1,15 @@
 <template>
   <div id="gamePlay">
       <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
-      <transition name="morph">  
-        <div v-if="playing" key="play" :class="{'yes': bgColor=='green', 'no': bgColor=='red'}" class="game card-lg shadow-l">
+        <div :class="{ 'card-lg': playing, 'card-sm': !playing, 'yes': bgColor=='green', 'no': bgColor=='red'}" class="game shadow-l in-out">
+         
+            <restaurant-view v-if="playing" :current="this.current" class="front"></restaurant-view>
 
-          <div v-if="!submitted" class ="front">
-            <img v-bind:src="this.current.image_url" class="rest-img">
+          <div v-else>
+            <p>In Lobby for game {{this.joinCode}}</p>
+            <button type="button" @click="startGame('yes')">Start Game</button>
           </div>
-          <div v-else class="back">
-            <h2> Waiting for other players to vote </h2>
-          </div>
-
         </div>
-        <div v-else key="lobby" class="lobby card-sm shadow-l">
-          <p>In Lobby for game {{this.joinCode}}</p>
-          <button type="button" @click="startGame('yes')">Start Game</button>
-        </div>
-      </transition>
       <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
   </div>
 </template>
@@ -27,19 +20,32 @@ import "@/assets/css/reset.css";
 import io from 'socket.io-client';
 import BtnHeart from "@/components/BtnHeart.vue";
 import BtnReject from "@/components/BtnReject.vue";
+import RestaurantView from "@/components/RestaurantView.vue";
 
 export default {
   name: "GamePlay",
   props: ['joinCode'],
-  components : {BtnHeart, BtnReject},
+  components : {
+    BtnHeart, 
+    BtnReject,
+    RestaurantView
+  },
   data() {
     return {
       playing: false,
       socket : io("https://functional-opaque-kosmoceratops.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
       current : "",
-      submitted: false,
+
       bgColor: ""
     };
+  },
+  computed: {
+    submitted: function() {
+      if (this.bgColor == "")
+        return false;
+      else
+        return true;
+    }
   },
 
   methods: {
@@ -57,16 +63,14 @@ export default {
             this.bgColor = "green";
           break;
       }
-      this.submitted= true;
+
 
       setTimeout(() => {
         this.$emit("bg", this.bgColor);
       },300);
-     
       setTimeout(()=> {
         this.socket.emit("submitVote", vote);
-        this.submitted = false;
-      }, 2000);
+      }, 1000);
     }
   },
   mounted() {
@@ -76,12 +80,15 @@ export default {
     });
     
     this.socket.on("startedGame", () => {
-      this.playing=true;
+
     });
     
     this.socket.on("nextChoice", data => {
+            this.playing=true;
       this.current = data["restaurant"];
-      this.$emit('bg', "");
+      console.log(this.current);
+      this.bgColor = "";
+      this.$emit('bg', this.bgColor);
     });
     
     this.socket.on("endedGame", data => {
@@ -111,11 +118,13 @@ export default {
 
 .rest-img {
   height: 200px;
+  width: 100px;
 }
 
-
-
-
+  
+.front {
+  height: 100px;
+}
   
 
 /* Submit Animation */
@@ -154,42 +163,6 @@ export default {
   }
   100% {
     transform: translateX(0) rotateY(180deg);
-  }
-}
-
-
-/* Morph Animation */
-.morph-enter {
-  opacity: 0;
-} 
-.morph-enter-active {
-  transition: opacity .4s linear .6s;
-  position: absolute !important;
-}
-.morph-leave {
-  opacity: 1;
-} 
-.morph-leave-active {
-  position: absolute !important;
-  animation:  scaleUp .4s;
-  animation-delay: .2s;
-  animation-fill-mode: forwards;
-  transition: opacity .4s linear .6s;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
-
-}
-.morph-leave-active > * {
-    opacity: 0;
-    transition: all .2s linear;
-    transform: translateY(-15px);
-}
-@keyframes scaleUp {
-  0% {
-    transform: scale();
-  }
-
-  100% {
-    transform: scaleY(1.5);
   }
 }
 

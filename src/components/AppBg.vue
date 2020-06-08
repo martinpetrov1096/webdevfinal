@@ -12,7 +12,6 @@ export default {
         fill: String
     }
 }
-
 </script>
 
 <style scoped>
@@ -35,12 +34,10 @@ export default {
   z-index: -2 !important;
   width: 0 !important;
 }
-
 .fill-bg {
   z-index: -1 !important;
   width: 100% !important;
 }
-
 .red {
   left: 0;
   background: #FF616F;
@@ -49,7 +46,4 @@ export default {
   right: 0;
   background: #37DB73;
 }
-
-
-
 </style>
