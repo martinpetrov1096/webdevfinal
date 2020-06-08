@@ -1,41 +1,43 @@
 <template>
-  <div id="gamePre" class="card-sm shadow-l">
-    <div class="joinGame">
-      <h2> Enter Join Code</h2>
-      <input
-          placeholder="Enter Code" 
-          v-model="joinCode"
-      >
-      <button @click="joinGame(joinCode)">Join Game</button>
-    </div>
-    <h1>OR</h1>
+  <div class="container">
+    <div id="gamePre" class="card-sm shadow-l">
+      <div class="joinGame">
+        <h2> Enter Join Code</h2>
+        <input
+            placeholder="Enter Code" 
+            v-model="joinCode"
+        >
+        <button @click="joinGame(joinCode)">Join Game</button>
+      </div>
+      <h1>OR</h1>
 
-    <div class="searchBar">
-      <h2>Create New Game </h2>
-      <input
-        type="text"
-        list="terms"
-        id="input-search"
-        v-model="searchText"
-        placeholder="Enter Keywords"
-        @keyup="getRecommended"
-      />
-      
-      <datalist id="terms">
-        <option v-for="term in autoComplete" :key="term.text">{{term.text}}</option>
-      </datalist>
-            
-      <vue-google-autocomplete
-        v-on:placechanged="getAddressData"
-        ref="address"
-        id="map"
-        classname="form-control"
-        placeholder="Location"
-        country="us"
-        types= "(cities)"
-      >
-      </vue-google-autocomplete>
-    <button variant="primary" @click="createGame()">Go!</button>
+      <div class="searchBar">
+        <h2>Create New Game </h2>
+        <input
+          type="text"
+          list="terms"
+          id="input-search"
+          v-model="searchText"
+          placeholder="Enter Keywords"
+          @keyup="getRecommended"
+        />
+        
+        <datalist id="terms">
+          <option v-for="term in autoComplete" :key="term.text">{{term.text}}</option>
+        </datalist>
+              
+        <vue-google-autocomplete
+          v-on:placechanged="getAddressData"
+          ref="address"
+          id="map"
+          classname="form-control"
+          placeholder="Location"
+          country="us"
+          types= "(cities)"
+        >
+        </vue-google-autocomplete>
+      <button variant="primary" @click="createGame()">Go!</button>
+      </div>
     </div>
   </div>
 </template>
@@ -102,10 +104,10 @@ export default {
 <style scoped>
 
 #gamePre {
-  display: flex;
+  height: auto;
+  width: auto;
   flex-flow: column;
-  justify-content: center;
-  align-items: center;
+
 }
 
 .searchBar {

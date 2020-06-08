@@ -20,6 +20,11 @@ body {
     padding: 50px;
     background-color: #f5f5f5;
 }
+
+
+
+
+
 .shadow-s {
   
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
@@ -67,6 +72,87 @@ body {
 }
 .secondary-text {
     background-color: #29434e;
+}
+
+
+/*******************************/
+/********* Animations **********/
+/*******************************/
+
+.slide-fade-enter-active {
+    transition: all .2s ease-out;
+}
+.slide-fade-leave-active {
+    transition: all .2s ease-in;
+  }
+  .slide-fade-enter {
+    transform: translateY(15px);
+    opacity: 0;
+  } 
+  .slide-fade-leave-to {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+
+
+
+
+
+
+
+
+.morph-enter {
+  opacity: 0;
+} 
+
+.morph-enter-active {
+  transition: opacity .4s linear .6s;
+  position: absolute !important;
+}
+
+.morph-leave {
+  opacity: 1;
+} 
+
+.morph-leave-active {
+  position: absolute !important;
+  animation:  scaleUp .4s;
+  animation-delay: .2s;
+  animation-fill-mode: forwards;
+
+  transition: opacity .4s linear .6s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
+
+}
+
+.morph-leave-active > * {
+    opacity: 0;
+    transition: all .2s linear;
+    transform: translateY(-15px);
+}
+
+
+@keyframes scaleUp {
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+
+/*******************************/
+/******** Mobile Device ********/
+/*******************************/
+@media only screen and (max-width: 600px) {
+    .card-lg {
+        width: 90%;
+        height: calc(90% - 250px);
+    }
+    .card-sm {
+        width: 90%;
+        height: calc(80% - 250px);
+    }    
+    
 }
 
 

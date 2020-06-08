@@ -2,8 +2,8 @@
   <div id="app">
     <app-bg :fill="bgColor" class="bg"></app-bg>
     <transition name="slide-fade" mode="out-in">
-        <game-pre v-if="state==0" @clicked="joinGame"></game-pre>
-        <game-play class="main" v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event"></game-play>
+        <game-pre v-if="state==0" @clicked="joinGame" class="gContainer"></game-pre>
+        <game-play v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event" class="gContainer"></game-play>
     </transition>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       bgColor: "red",
-      state: 1,
+      state: 0,
       view: "",
       joinCode: ""
     }
@@ -57,84 +57,22 @@ html,
   align-items: center;
 }
 
+.gContainer {
+  height: 100%;
+  width: 100%;
 
-.slide-fade-enter-active {
-    transition: all .2s ease-out;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
-.slide-fade-leave-active {
-    transition: all .2s ease-in;
-  }
-  .slide-fade-enter {
-    transform: translateY(15px);
-    opacity: 0;
-  } 
-  .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
-    transform: translateY(-15px);
-    opacity: 0;
-  }
-
-
 
 @media only screen and (max-width: 600px) {
-
-  .main {
-    flex-basis: 100%;
-  }
-
- 
-
-}
-
-
-
-
-
-
-
-
-
-
-.morph-enter {
-  opacity: 0;
-} 
-
-.morph-enter-active {
-  transition: opacity .4s linear .6s;
-  position: absolute !important;
-}
-
-.morph-leave {
-  opacity: 1;
-} 
-
-.morph-leave-active {
-  position: absolute !important;
-  animation:  scaleUp .4s;
-  animation-delay: .2s;
-  animation-fill-mode: forwards;
-
-  transition: opacity .4s linear .6s;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
-
-}
-
-.morph-leave-active > * {
-    opacity: 0;
-    transition: all .2s linear;
-    transform: translateY(-15px);
-}
-
-
-@keyframes scaleUp {
-  0% {
-    transform: scale();
-  }
-
-  100% {
-    transform: scaleY(1.5);
+  .gContainer {
+    flex-wrap: wrap;
   }
 }
+
 
 
 

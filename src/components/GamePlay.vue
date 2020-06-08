@@ -1,23 +1,23 @@
 <template>
   <div id="gamePlay">
-    <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
-    <transition name="morph">  
-      <div v-if="playing" key="play" :class="{'yes': bgColor=='green', 'no': bgColor=='red'}" class="game card-lg shadow-l">
+      <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
+      <transition name="morph">  
+        <div v-if="playing" key="play" :class="{'yes': bgColor=='green', 'no': bgColor=='red'}" class="game card-lg shadow-l">
 
-        <div v-if="!submitted" class ="front">
-          <img v-bind:src="this.current.image_url" class="rest-img">
-        </div>
-        <div v-else class="back">
-          <h2> Waiting for other players to vote </h2>
-        </div>
+          <div v-if="!submitted" class ="front">
+            <img v-bind:src="this.current.image_url" class="rest-img">
+          </div>
+          <div v-else class="back">
+            <h2> Waiting for other players to vote </h2>
+          </div>
 
-      </div>
-      <div v-else key="lobby" class="lobby card-sm shadow-l">
-        <p>In Lobby for game {{this.joinCode}}</p>
-        <button type="button" @click="startGame('yes')">Start Game</button>
-      </div>
-    </transition>
-    <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
+        </div>
+        <div v-else key="lobby" class="lobby card-sm shadow-l">
+          <p>In Lobby for game {{this.joinCode}}</p>
+          <button type="button" @click="startGame('yes')">Start Game</button>
+        </div>
+      </transition>
+      <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
   components : {BtnHeart, BtnReject},
   data() {
     return {
-      playing: true,
+      playing: false,
       socket : io("https://functional-opaque-kosmoceratops.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
       current : "",
       submitted: false,
@@ -95,23 +95,19 @@ export default {
 <style scoped>
 
 #gamePlay {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-   
+  flex-flow: row wrap
 }
 
 
-@media only screen and (max-width: 680px) {
-
-
+@media only screen and (max-width: 600px) {
   .game {
+    flex-basis: 100%;
+    margin: 0 40px;
     order: -1;
-    flex-basis: 80%;
   }
 
 }
+
 
 .rest-img {
   height: 200px;
