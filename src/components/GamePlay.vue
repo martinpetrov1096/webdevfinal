@@ -3,11 +3,14 @@
       <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
         <div :class="{ 'card-lg': playing, 'card-sm': !playing, 'yes': bgColor=='green', 'no': bgColor=='red'}" class="game shadow-l in-out">
          
-            <restaurant-view v-if="playing" :current="this.current" class="front"></restaurant-view>
+            <restaurant-view v-if="playing" :current="this.current" :flipped="this.submitted" class="front"></restaurant-view>
 
-          <div v-else>
+          <div v-else class="lobby">
+
             <p>In Lobby for game {{this.joinCode}}</p>
-            <button type="button" @click="startGame('yes')">Start Game</button>
+            <div class="button">
+             <div class="mif-chevron-right mif-4x" @click="startGame()"></div>
+           </div>
           </div>
         </div>
       <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
@@ -33,7 +36,7 @@ export default {
   data() {
     return {
       playing: false,
-      socket : io("https://functional-opaque-kosmoceratops.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
+      socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
       current : "",
 
       bgColor: ""
@@ -77,6 +80,7 @@ export default {
     this.socket.emit("joinGame");
     
     this.socket.on("joinedGame", () => {
+
     });
     
     this.socket.on("startedGame", () => {
@@ -84,7 +88,7 @@ export default {
     });
     
     this.socket.on("nextChoice", data => {
-            this.playing=true;
+      this.playing=true;
       this.current = data["restaurant"];
       console.log(this.current);
       this.bgColor = "";
@@ -92,6 +96,8 @@ export default {
     });
     
     this.socket.on("endedGame", data => {
+      alert("Winner!");
+      this.bgColor= "";
       this.$emit('winner', data);
     });
   }
@@ -126,6 +132,20 @@ export default {
   height: 100px;
 }
   
+.button {
+  width : auto;
+  background-color:#455a64;
+   display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.lobby {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Submit Animation */
 .yes {
@@ -133,14 +153,6 @@ export default {
 }
 .no {
   animation: no 1s;
-}
-
-.yes > * {
-  visibility: hidden;
-}
-
-.no > * {
-  visibility: hidden;
 }
 
 

@@ -67,7 +67,7 @@ export default {
       this.address = addressData;
     },
     getRecommended: function() {
-      const url = `https://cors-anywhere.herokuapp.com/https://functional-opaque-kosmoceratops.glitch.me/autocomplete`;
+      const url = `https://cors-anywhere.herokuapp.com/https://picayune-responsible-jackfruit.glitch.me/autocomplete`;
       axios.get(url,
         {
           params: {
@@ -85,7 +85,7 @@ export default {
         "longitude": this.address.longitude
       }
       axios({
-        url: "https://cors-anywhere.herokuapp.com/https://functional-opaque-kosmoceratops.glitch.me/newGame",
+        url: "https://cors-anywhere.herokuapp.com/https://picayune-responsible-jackfruit.glitch.me/newGame",
         method: "post",
         data: payload
       })

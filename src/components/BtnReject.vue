@@ -18,7 +18,7 @@ export default {
     outline: none;
     border: none;
     border-radius: 100%;  
-    background: url("~@/assets/icons/rejectButton.svg");
+    background: url("https://cdn.glitch.com/f885813f-4542-461e-9e2c-c21e4f424ee4%2FrejectButton.e604d513.svg?v=1591586148426");
     background-repeat: no-repeat;
     opacity: 0;
 }

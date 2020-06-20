@@ -65,17 +65,33 @@ body {
     opacity: 0;
 }
 
+.flip-fade-enter-active {
+    transition: all .1s ease-out 1s;
+}
+.flip-fade-leave-active {
+    transition: all .1s ease-in;
+}
+.flip-fade-enter {
+    transform: translateY(15px);
+    opacity: 0;
+} 
+.flip-fade-leave-to {
+    transform: translateY(-15px);
+    opacity: 0;
+}
+
+
 /*******************************/
 /******** Mobile Device ********/
 /*******************************/
 @media only screen and (max-width: 600px) {
     .card-lg {
         width: 90%;
-        height: calc(90% - 250px);
+        height: calc(90% - 120px);
     }
     .card-sm {
         width: 90%;
-        height: calc(70% - 250px);
+        height: calc(70% - 120px);
     }    
     
 }
