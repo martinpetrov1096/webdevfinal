@@ -1,48 +1,71 @@
 <template>
-  <div id="gamePlay">
-      <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
-      <div :class="{ 'card-lg': playing, 'card-sm': !playing, 'yes': bgColor=='green', 'no': bgColor=='red'}" class="game shadow-l in-out">
-        
-        <restaurant-view v-if="playing" :current="this.current" :flipped="this.submitted" class="front"></restaurant-view>
+  <div id="gamePlay" class="container">
 
-        <div v-else class="lobby">
+      <btn-reject class="reject"
+        :visible="playing" 
+        @click.native="submitVote(0)">
+      </btn-reject>
 
-          <p>In Lobby for game {{this.joinCode}}</p>
-          <div class="button">
-            <div class="mif-chevron-right mif-4x" @click="startGame()"></div>
+      <div class="game shadow-l in-out"
+        :class="{ 
+
+          'yes': getBgColor()=='green',
+          'no': getBgColor()=='red',
+          'card-lg': playing, 
+          'card-sm': !playing 
+        }">
+        <h1 v-if="playing">Playing</h1>
+        <!--<restaurant-view 
+          v-if="playing" 
+          :current="this.current" 
+          :flipped="this.submitted" 
+          class="front">
+        </restaurant-view>
+        -->
+        <div class="lobby"
+          v-else>
+
+          <p>In Lobby for game {{this.$route.params.joinCode}}</p>
+          <div class="btn-lg"
+            @click="startGame()">
           </div>
+
         </div>
+
       </div>
-      <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
+
+      <btn-heart class="heart" 
+        :visible="playing" 
+        @click.native="submitVote(1)" 
+      ></btn-heart>
   </div>
 </template>
 
 <script>
-
 import io from 'socket.io-client';
 import BtnHeart from "@/components/BtnHeart.vue";
 import BtnReject from "@/components/BtnReject.vue";
-import RestaurantView from "@/components/RestaurantView.vue";
+//import RestaurantView from "@/components/RestaurantView.vue";
 
 export default {
   name: "Game",
-  props: ['joinCode'],
   components : {
     BtnHeart, 
     BtnReject,
-    RestaurantView
+    //RestaurantView
   },
   data() {
     return {
       playing: false,
       socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
       current : "",
-      bgColor: ""
+      bgColor: this.$bgColor
+     
     };
   },
   computed: {
     submitted: function() {
-      if (this.bgColor == "")
+      if (this.$bgColor == "")
         return false;
       else
         return true;
@@ -50,24 +73,31 @@ export default {
   },
 
   methods: {
+    getBgColor() {
+      return this.$bgColor;
+    },
     startGame(){
       this.socket.emit("startGame");
+      this.$bgColor = "na";
+      console.log("startGame:" + this.$bgColor);
     },
     
     submitVote(vote) {
 
       switch(vote) {
         case 0: 
-            this.bgColor = "red";
+          this.$bgColor = "red";
           break;
         case 1: 
-            this.bgColor = "green";
+          this.$bgColor = "green";
           break;
       }
+      console.log(this.$bgColor);
 
 
       setTimeout(() => {
-        this.$emit("bg", this.bgColor);
+       // this.$emit("bg", this.$bgColor);
+        
       },300);
       setTimeout(()=> {
         this.socket.emit("submitVote", vote);
@@ -75,7 +105,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.params.joinCode)
+    console.log(this.$bgColor)
     this.socket.emit("joinGame");
     
     this.socket.on("joinedGame", () => {
@@ -87,13 +117,11 @@ export default {
     this.socket.on("nextChoice", data => {
       this.playing=true;
       this.current = data["restaurant"];
-      this.bgColor = "";
-      this.$emit('bg', this.bgColor);
+      this.$bgColor = "";
     });
     
     this.socket.on("endedGame", data => {
       alert("Winner!");
-      this.bgColor= "";
       this.$emit('winner', data);
     });
   }
@@ -103,10 +131,14 @@ export default {
 
 <style scoped>
 
-#gamePlay {
-  flex-flow: row wrap
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 }
-
 
 @media only screen and (max-width: 600px) {
   .game {
@@ -128,13 +160,6 @@ export default {
   height: 100px;
 }
   
-.button {
-  width : auto;
-  background-color:#455a64;
-   display:flex;
-    justify-content:center;
-    align-items:center;
-}
 
 .lobby {
   display: flex;
