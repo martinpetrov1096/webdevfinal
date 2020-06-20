@@ -1,16 +1,13 @@
 <template>
     <div id="app-bg">
-        <div class="red bg" :class="{'fill-bg': fill=='red', 'nill-bg': fill=='green' }"></div>
-        <div class="green bg"  :class="{'nill-bg': fill=='red', 'fill-bg': fill=='green' }"></div>
+        <div class="red bg" :class="{'fill-bg': $bgColor=='red', 'nill-bg': $bgColor=='green' }"></div>
+        <div class="green bg"  :class="{'nill-bg': $bgColor=='red', 'fill-bg': $bgColor=='green' }"></div>
     </div>
 </template>
 
 <script>
 export default {
     name: "AppBg",
-    props: {
-        fill: String
-    }
 }
 </script>
 

@@ -1,24 +1,23 @@
 <template>
   <div id="gamePlay">
       <btn-reject :visible="playing" @click.native="submitVote(0)" class="reject"></btn-reject>
-        <div :class="{ 'card-lg': playing, 'card-sm': !playing, 'yes': bgColor=='green', 'no': bgColor=='red'}" class="game shadow-l in-out">
-         
-            <restaurant-view v-if="playing" :current="this.current" :flipped="this.submitted" class="front"></restaurant-view>
+      <div :class="{ 'card-lg': playing, 'card-sm': !playing, 'yes': bgColor=='green', 'no': bgColor=='red'}" class="game shadow-l in-out">
+        
+        <restaurant-view v-if="playing" :current="this.current" :flipped="this.submitted" class="front"></restaurant-view>
 
-          <div v-else class="lobby">
+        <div v-else class="lobby">
 
-            <p>In Lobby for game {{this.joinCode}}</p>
-            <div class="button">
-             <div class="mif-chevron-right mif-4x" @click="startGame()"></div>
-           </div>
+          <p>In Lobby for game {{this.joinCode}}</p>
+          <div class="button">
+            <div class="mif-chevron-right mif-4x" @click="startGame()"></div>
           </div>
         </div>
+      </div>
       <btn-heart :visible="playing" @click.native="submitVote(1)" class="heart"></btn-heart>
   </div>
 </template>
 
 <script>
-import "@/assets/css/reset.css";
 
 import io from 'socket.io-client';
 import BtnHeart from "@/components/BtnHeart.vue";
@@ -26,7 +25,7 @@ import BtnReject from "@/components/BtnReject.vue";
 import RestaurantView from "@/components/RestaurantView.vue";
 
 export default {
-  name: "GamePlay",
+  name: "Game",
   props: ['joinCode'],
   components : {
     BtnHeart, 
@@ -36,9 +35,8 @@ export default {
   data() {
     return {
       playing: false,
-      socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.joinCode}`}),
+      socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
       current : "",
-
       bgColor: ""
     };
   },
@@ -77,20 +75,18 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.params.joinCode)
     this.socket.emit("joinGame");
     
     this.socket.on("joinedGame", () => {
-
     });
     
     this.socket.on("startedGame", () => {
-
     });
     
     this.socket.on("nextChoice", data => {
       this.playing=true;
       this.current = data["restaurant"];
-      console.log(this.current);
       this.bgColor = "";
       this.$emit('bg', this.bgColor);
     });
@@ -154,8 +150,6 @@ export default {
 .no {
   animation: no 1s;
 }
-
-
 
 @keyframes yes {
   0% { 

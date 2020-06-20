@@ -1,40 +1,24 @@
 <template>
   <div id="app">
-    <app-bg :fill="bgColor" class="bg"></app-bg>
+    <app-bg class="bg"></app-bg>
     <transition name="slide-fade" mode="out-in">
+      <router-view id="view"></router-view >
+    </transition>
+
+    <!--<transition name="slide-fade" mode="out-in">
         <game-pre v-if="state==0" @clicked="joinGame" class="gContainer"></game-pre>
         <game-play v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event" class="gContainer"></game-play>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
 <script>
-
-import GamePlay from "@/components/GamePlay.vue";
-import GamePre from "@/components/GamePre.vue";
 import AppBg from "@/components/AppBg.vue";
 
 export default {
   name: 'App',
   components: {
-    GamePlay,
-    GamePre,
     AppBg,
-  },
-  data() {
-    return {
-      bgColor: "red",
-      state: 0,
-      view: "",
-      joinCode: ""
-    }
-  },
-  methods: {
-    joinGame(code) {
-      console.log(code);
-      this.joinCode = code;
-      this.state = 1;
-    }
   }
 }
 </script>
@@ -45,18 +29,21 @@ export default {
 body,
 html,
 .bg,
-#app
+#app,
+#view
 {
   width: 100%;
   height: 100%;
 }
 
-#app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#view {
+  
 }
 
+
+
+
+/*
 .gContainer {
   height: 100%;
   width: 100%;
@@ -74,6 +61,6 @@ html,
 }
 
 
-
+*/
 
 </style>
