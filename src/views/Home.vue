@@ -107,7 +107,8 @@ export default {
       });
     },
     joinGame() {
-      this.$router.push("game/"+this.joinCode)
+     // this.$router.push("/game/"+this.joinCode)
+      this.$store.dispatch("gameStart", this.joinCode);
     }
   }
 }

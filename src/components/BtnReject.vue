@@ -1,18 +1,15 @@
 <template>
-    <div :class="{'vis': visible}" id="btnReject" class="btn"></div>
+    <div id="btnReject" class="btn"></div>
 </template>
 
 <script>
-
 export default {
-    name: "BtnReject",
-    props: {
-        visible: Boolean
-    }
+    name: "BtnReject"
 }
 </script>
 <style scoped>
 .btn {
+    margin:20px 10px;
     width: 100px;
     height: 100px;
     outline: none;
@@ -20,10 +17,5 @@ export default {
     border-radius: 100%;  
     background: url("https://cdn.glitch.com/f885813f-4542-461e-9e2c-c21e4f424ee4%2FrejectButton.e604d513.svg?v=1591586148426");
     background-repeat: no-repeat;
-    opacity: 0;
-}
-
-.vis {
-    opacity: 1;
 }
 </style>

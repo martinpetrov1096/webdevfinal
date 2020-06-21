@@ -1,27 +1,45 @@
 <template>
-  <div id="gamePlay" class="container">
 
-      <btn-reject class="reject"
+    <div class="game"
+      v-if="playing">
+      <btn-reject></btn-reject>
+      <restaurant-view class="rest-view"
+        :restaurant="current"
+        :flipped="voteSubmitted">
+      </restaurant-view>
+      <btn-heart></btn-heart>
+    
+    
+    </div>
+    <div class="lobby"
+      v-else>
+      <p>In Lobby for game {{this.$route.params.joinCode}}</p>
+      <div class="btn-lg"
+        @click="startGame()">
+      </div>
+    
+
+
+     <!-- <btn-reject class="reject"
         :visible="playing" 
         @click.native="submitVote(0)">
       </btn-reject>
 
       <div class="game shadow-l in-out"
         :class="{ 
-
-          'yes': getBgColor()=='green',
-          'no': getBgColor()=='red',
+          'no': $store.getters.voteState==1,
+          'yes': $store.getters.voteState==2,
           'card-lg': playing, 
           'card-sm': !playing 
         }">
+
         <h1 v-if="playing">Playing</h1>
-        <!--<restaurant-view 
+        <restaurant-view class="front"
           v-if="playing" 
           :current="this.current" 
-          :flipped="this.submitted" 
-          class="front">
+          :flipped="this.voteSubmitted">
         </restaurant-view>
-        -->
+  
         <div class="lobby"
           v-else>
 
@@ -37,7 +55,7 @@
       <btn-heart class="heart" 
         :visible="playing" 
         @click.native="submitVote(1)" 
-      ></btn-heart>
+      ></btn-heart> -->
   </div>
 </template>
 
@@ -45,27 +63,25 @@
 import io from 'socket.io-client';
 import BtnHeart from "@/components/BtnHeart.vue";
 import BtnReject from "@/components/BtnReject.vue";
-//import RestaurantView from "@/components/RestaurantView.vue";
+import RestaurantView from "@/components/RestaurantView.vue";
 
 export default {
   name: "Game",
   components : {
     BtnHeart, 
     BtnReject,
-    //RestaurantView
+    RestaurantView
   },
   data() {
     return {
-      playing: false,
+      playing: true,
       socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
       current : "",
-      bgColor: this.$bgColor
-     
     };
   },
   computed: {
-    submitted: function() {
-      if (this.$bgColor == "")
+    voteSubmitted: function() {
+      if (this.$store.getters.voteState == 0)
         return false;
       else
         return true;
@@ -73,39 +89,26 @@ export default {
   },
 
   methods: {
-    getBgColor() {
-      return this.$bgColor;
-    },
     startGame(){
       this.socket.emit("startGame");
-      this.$bgColor = "na";
-      console.log("startGame:" + this.$bgColor);
+      this.$store.commit("voteReset")
     },
-    
     submitVote(vote) {
-
       switch(vote) {
         case 0: 
-          this.$bgColor = "red";
+          this.$store.commit("voteNo");
           break;
         case 1: 
-          this.$bgColor = "green";
+          this.$store.commit("voteYes");
           break;
       }
-      console.log(this.$bgColor);
-
-
-      setTimeout(() => {
-       // this.$emit("bg", this.$bgColor);
-        
-      },300);
+      // Wait 1 second just to show the animation
       setTimeout(()=> {
         this.socket.emit("submitVote", vote);
       }, 1000);
     }
   },
   mounted() {
-    console.log(this.$bgColor)
     this.socket.emit("joinGame");
     
     this.socket.on("joinedGame", () => {
@@ -115,14 +118,15 @@ export default {
     });
     
     this.socket.on("nextChoice", data => {
-      this.playing=true;
       this.current = data["restaurant"];
-      this.$bgColor = "";
+      this.$store.commit("voteReset");
+      this.playing=true;
     });
     
     this.socket.on("endedGame", data => {
-      alert("Winner!");
-      this.$emit('winner', data);
+      //this.$router.push("/winner/"+this.current.id);
+     this.$store.dispatch("gameEnd", this.current);
+     console.log(data);
     });
   }
   
@@ -131,41 +135,41 @@ export default {
 
 <style scoped>
 
-.container {
-  width: 100%;
+.game {
   height: 100%;
+
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+
 }
+
+.rest-view {
+
+}
+
+
 
 @media only screen and (max-width: 600px) {
   .game {
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+  .rest-view {
+    height: calc(100% - 240px);
     flex-basis: 100%;
-    margin: 0 40px;
     order: -1;
   }
 
 }
 
 
-.rest-img {
-  height: 200px;
-  width: 100px;
-}
-
-  
-.front {
-  height: 100px;
-}
-  
-
 .lobby {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+ 
 }
 
 /* Submit Animation */

@@ -4,11 +4,6 @@
     <transition name="slide-fade" mode="out-in">
       <router-view id="view"></router-view >
     </transition>
-
-    <!--<transition name="slide-fade" mode="out-in">
-        <game-pre v-if="state==0" @clicked="joinGame" class="gContainer"></game-pre>
-        <game-play v-else v-bind:join-code="this.joinCode" @bg="bgColor=$event" class="gContainer"></game-play>
-    </transition> -->
   </div>
 </template>
 
@@ -18,7 +13,7 @@ import AppBg from "@/components/AppBg.vue";
 export default {
   name: 'App',
   components: {
-    AppBg,
+    AppBg
   }
 }
 </script>
@@ -29,38 +24,27 @@ export default {
 body,
 html,
 .bg,
-#app,
-#view
+#app
 {
   width: 100%;
   height: 100%;
+
 }
 
 #view {
-  
-}
-
-
-
-
-/*
-.gContainer {
-  height: 100%;
-  width: 100%;
-
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
+  height: calc(100% - 60px);
+  width: calc(100% - 60px);
+  padding: 30px;
 }
 
 @media only screen and (max-width: 600px) {
-  .gContainer {
-    flex-wrap: wrap;
+  #view {
+    height: calc(100% - 12px);
+    width: calc(100% - 12px);
+    padding: 5px;
   }
 }
 
 
-*/
 
 </style>

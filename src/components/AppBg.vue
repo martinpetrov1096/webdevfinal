@@ -1,13 +1,18 @@
 <template>
     <div id="app-bg">
-        <div class="red bg" :class="{'fill-bg': $bgColor=='red', 'nill-bg': $bgColor=='green' }"></div>
-        <div class="green bg"  :class="{'nill-bg': $bgColor=='red', 'fill-bg': $bgColor=='green' }"></div>
+        <div class="red bg" :class="{'fill-bg': bgColor=='red', 'nill-bg': bgColor=='green' }"></div>
+        <div class="green bg"  :class="{'nill-bg': bgColor=='red', 'fill-bg': bgColor=='green' }"></div>
     </div>
 </template>
 
 <script>
 export default {
     name: "AppBg",
+    computed: {
+      bgColor: function() {
+        return this.$store.state.bgColor;
+      }
+    }
 }
 </script>
 
