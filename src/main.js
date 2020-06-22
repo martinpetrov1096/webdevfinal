@@ -16,7 +16,7 @@ const store = new Vuex.Store({
   state: {
     bgColor: "red",
     voteState: 0, // 0 = not voted, 1 = voted no, 2 = voted yes
-    gameState: 0,
+    gameState: 1,
     winner: ""
   },
   getters: {

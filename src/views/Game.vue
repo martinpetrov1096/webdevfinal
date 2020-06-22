@@ -1,61 +1,41 @@
 <template>
+  <div class="container">
+    <transition
+      name="slide-roll"> 
+      <div class="game"
+        v-if="playing"
+        key="game">
 
-    <div class="game"
-      v-if="playing">
-      <btn-reject></btn-reject>
-      <restaurant-view class="rest-view"
-        :restaurant="current"
-        :flipped="voteSubmitted">
-      </restaurant-view>
-      <btn-heart></btn-heart>
-    
-    
-    </div>
-    <div class="lobby"
-      v-else>
-      <p>In Lobby for game {{this.$route.params.joinCode}}</p>
-      <div class="btn-lg"
-        @click="startGame()">
-      </div>
-    
+        <btn-reject class="btn-vote"
+          @click.native="submitVote(0)">
+        </btn-reject> 
 
-
-     <!-- <btn-reject class="reject"
-        :visible="playing" 
-        @click.native="submitVote(0)">
-      </btn-reject>
-
-      <div class="game shadow-l in-out"
-        :class="{ 
-          'no': $store.getters.voteState==1,
-          'yes': $store.getters.voteState==2,
-          'card-lg': playing, 
-          'card-sm': !playing 
-        }">
-
-        <h1 v-if="playing">Playing</h1>
-        <restaurant-view class="front"
-          v-if="playing" 
-          :current="this.current" 
-          :flipped="this.voteSubmitted">
+        <restaurant-view class="rest-view"
+          :restaurant="current"
+          :flipped="voteSubmitted"
+          :class="{ 
+            'no': $store.getters.voteState==1,
+            'yes': $store.getters.voteState==2
+            }">
         </restaurant-view>
-  
-        <div class="lobby"
-          v-else>
 
-          <p>In Lobby for game {{this.$route.params.joinCode}}</p>
-          <div class="btn-lg"
-            @click="startGame()">
-          </div>
-
-        </div>
+        <btn-heart class="btn-vote"
+          @click.native="submitVote(1)">
+        </btn-heart> 
 
       </div>
 
-      <btn-heart class="heart" 
-        :visible="playing" 
-        @click.native="submitVote(1)" 
-      ></btn-heart> -->
+      <div class="lobby"
+        v-else
+        key="lobby">
+        <h3>Share this url with friends </h3> 
+        <div class="startBtn"
+          @click="startGame()">
+        </div>
+        <h3>Click start when they have all joined</h3> 
+      </div>
+
+    </transition>
   </div>
 </template>
 
@@ -76,7 +56,7 @@ export default {
     return {
       playing: true,
       socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
-      current : "",
+      current : {"id":"020ZLMQtsF2t7G4klDPsvw","alias":"yeti-restaurant-davis","name":"Yeti Restaurant","image_url":"https://s3-media1.fl.yelpcdn.com/bphoto/4IgCB2JdZLmkxpcTIeDTYQ/o.jpg","is_closed":false,"url":"https://www.yelp.com/biz/yeti-restaurant-davis?adjust_creative=eYeZF7wkB3kA6q-9Y91iOw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=eYeZF7wkB3kA6q-9Y91iOw","review_count":313,"categories":[{"alias":"indpak","title":"Indian"},{"alias":"himalayan","title":"Himalayan/Nepalese"},{"alias":"seafood","title":"Seafood"}],"rating":4,"coordinates":{"latitude":38.54372,"longitude":-121.74102},"transactions":["delivery","pickup"],"price":"$$","location":{"address1":"234 E St","address2":"","address3":"","city":"Davis","zip_code":"95616","country":"US","state":"CA","display_address":["234 E St","Davis, CA 95616"]},"phone":"+15307470123","display_phone":"(530) 747-0123","distance":82.4944077236142},
     };
   },
   computed: {
@@ -90,8 +70,9 @@ export default {
 
   methods: {
     startGame(){
+      this.playing = true;
       this.socket.emit("startGame");
-      this.$store.commit("voteReset")
+      this.$store.commit("voteReset");
     },
     submitVote(vote) {
       switch(vote) {
@@ -124,7 +105,6 @@ export default {
     });
     
     this.socket.on("endedGame", data => {
-      //this.$router.push("/winner/"+this.current.id);
      this.$store.dispatch("gameEnd", this.current);
      console.log(data);
     });
@@ -134,42 +114,79 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: inherit;
+  height: inherit;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.lobby {
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.lobby h3 {
+  color: white;
+  font-size: 18px;
+}
+
+.startBtn {
+  color: white;
+  font-size: 120px;
+  transition: all .1s ease-in;
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.startBtn:hover {
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
+}
+.startBtn::before {
+  text-align: center;
+  font-family: "FontAwesome";
+  content: '\f144';
+}
 
 .game {
-  height: 100%;
+  height: inherit;
 
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-
 }
 
 .rest-view {
+    transition: box-shadow .3s ease-in-out;
+}
 
+.btn-vote {
+  margin:20px 10px;
 }
 
 
 
+/* Mobile Device Layout */
 @media only screen and (max-width: 600px) {
   .game {
     flex-flow: row wrap;
     justify-content: space-around;
   }
   .rest-view {
-    height: calc(100% - 240px);
+    height: calc(100% - 240px) !important;
     flex-basis: 100%;
+
     order: -1;
   }
+  .btn-vote {
+    flex-basis: calc(50% - 20px);
+  }
 
-}
-
-
-.lobby {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
- 
 }
 
 /* Submit Animation */
@@ -201,6 +218,38 @@ export default {
   }
 }
 
+/* Start Game Animation */
+.slide-roll-leave-active {
+  position: absolute;
+  text-shadow: none;
+  transition: text-shadow .3s ease-in-out;
+  animation: slide-roll-exit 1s ease-in-out;
+}
 
+.slide-roll-enter-active {
+  position: relative;
+  left: calc(50% + 300px);
+  animation: slide-roll-enter 1s ease-in-out;
+  
+} 
+.slide-roll-enter-active .rest-view {
+  box-shadow: none;
+}
+@keyframes slide-roll-exit {
+  0% {
+    left: calc(50% - 150px);
+  }
+  100% {
+    left: calc(0% - 300px);
+  }
+}
+@keyframes slide-roll-enter {
+  0% {
+    left: calc(50% + 300px);
+  }
+  100% {
+    left: 0;
+  }
+}
 
 </style>

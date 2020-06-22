@@ -107,7 +107,6 @@ export default {
       });
     },
     joinGame() {
-     // this.$router.push("/game/"+this.joinCode)
       this.$store.dispatch("gameStart", this.joinCode);
     }
   }
@@ -117,10 +116,8 @@ export default {
 <style scoped>
 
 .container {
-  width: 100%;
-  height: 100%;
   display: flex;
-  flex-flow: column;
+  flex-flow: row;
   justify-content: center;
   align-items: center;
 }
@@ -143,7 +140,6 @@ h1 {
 }
 
 .searchBar {
-  
     margin-bottom: 10px;
     padding:10px;
 }

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 import AppBg from "@/components/AppBg.vue";
 
 export default {
@@ -16,19 +17,23 @@ export default {
     AppBg
   }
 }
+
 </script>
 
 <style>
-
-
+/* 
+  Every router-view will be wrapped
+  in a container (#view) with some
+  padding
+*/
 body,
 html,
 .bg,
 #app
 {
+  overflow: hidden;
   width: 100%;
   height: 100%;
-
 }
 
 #view {
@@ -44,7 +49,4 @@ html,
     padding: 5px;
   }
 }
-
-
-
 </style>
