@@ -54,9 +54,9 @@ export default {
   },
   data() {
     return {
-      playing: true,
+      playing: false,
       socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
-      current : {"id":"020ZLMQtsF2t7G4klDPsvw","alias":"yeti-restaurant-davis","name":"Yeti Restaurant","image_url":"https://s3-media1.fl.yelpcdn.com/bphoto/4IgCB2JdZLmkxpcTIeDTYQ/o.jpg","is_closed":false,"url":"https://www.yelp.com/biz/yeti-restaurant-davis?adjust_creative=eYeZF7wkB3kA6q-9Y91iOw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=eYeZF7wkB3kA6q-9Y91iOw","review_count":313,"categories":[{"alias":"indpak","title":"Indian"},{"alias":"himalayan","title":"Himalayan/Nepalese"},{"alias":"seafood","title":"Seafood"}],"rating":4,"coordinates":{"latitude":38.54372,"longitude":-121.74102},"transactions":["delivery","pickup"],"price":"$$","location":{"address1":"234 E St","address2":"","address3":"","city":"Davis","zip_code":"95616","country":"US","state":"CA","display_address":["234 E St","Davis, CA 95616"]},"phone":"+15307470123","display_phone":"(530) 747-0123","distance":82.4944077236142},
+      current : ""
     };
   },
   computed: {
@@ -179,8 +179,10 @@ export default {
   }
   .rest-view {
     height: calc(100% - 240px) !important;
+    width: auto;
+    margin: 0 20px;
+    max-width: 300px !important;
     flex-basis: 100%;
-
     order: -1;
   }
   .btn-vote {

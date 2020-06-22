@@ -29,7 +29,8 @@ export default {
   top: 0;
   width: 50%;
   height: 100%;
-  transition: all 1s ease-in-out;
+  transition: all .5s ease-in-out;
+  transition-delay: .2s;
   /*transition-delay: .2s; */
 }
 .nill-bg {

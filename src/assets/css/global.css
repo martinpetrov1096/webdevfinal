@@ -19,7 +19,7 @@ body {
 }
 .card-lg {
     flex-grow: 1;
-    max-width: 300px;
+    width: 300px;
     height: 500px;
     border-radius: 30px;
     padding: 50px;
