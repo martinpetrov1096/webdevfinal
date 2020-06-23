@@ -1,9 +1,8 @@
 <template>
   <div>
-      <restaurant-view
-        :current="restaurant">
-      </restaurant-view> 
-      <h1>{{restaurant}}</h1>
+      <restaurant-card
+        :restaurant="$store.getters.winner">
+      </restaurant-card> 
       <h2
         @click="$store.dispatch('gameReset')"> 
         New Game 
@@ -13,16 +12,13 @@
 </template>
 
 <script>
-import RestaurantView from "@/components/RestaurantView.vue";
+import RestaurantCard from "@/components/RestaurantCard.vue";
 export default {
   name: "Winner",
   components: {
-    RestaurantView
-  },
-  data() {
-    return {
-      restaurant: this.$store.getters.winner
-    }
+    RestaurantCard
+  
+
   }
 
 

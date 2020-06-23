@@ -2,13 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from "./router";
 import Vuex from "vuex";
-
+import Axios from 'axios';
+import AsyncComputed from 'vue-async-computed';
 import "@/assets/css/reset.css";
 import "@/assets/css/global.css";
+
 ////////////////////////////////
 ////// CONFIGURE SERVICES //////
 ////////////////////////////////
 Vue.config.productionTip = false
+Vue.prototype.$http = Axios;
+
+Vue.use(AsyncComputed);
 
 // Vuex Store
 Vue.use(Vuex);
