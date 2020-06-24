@@ -6,7 +6,7 @@
 
       <img class="cur-img"
         :src="curUrl"
-        :key="curUrl">
+        :key="index">
 
     </transition>
     <div class="nav-container">

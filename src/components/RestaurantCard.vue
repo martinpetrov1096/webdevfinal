@@ -1,13 +1,14 @@
 <template>
   <div id="restaurantCard" class="card-lg shadow-l"
     :class="{ 
-      'no': $store.getters.voteState==1,
-      'yes': $store.getters.voteState==2,
-      'flip': flipped==true
+      'no': $store.getters.voteState==1 && submitClass==true,
+      'yes': $store.getters.voteState==2 && submitClass==true,
+      'flip': flipped==true && flipClass==true,
+      'unflip': flipped==false && flipClass==true,
     }">
    
     <transition 
-      name="slide-fade"
+      name="flip-fade"
       mode="out-in">
 
       <div class="front"
@@ -16,8 +17,8 @@
 
         <div class="img-container">
             <restaurant-card-gallery
-              :img_urls="restaurant.photos"
-            ></restaurant-card-gallery>
+              :img_urls="restaurant.photos">
+            </restaurant-card-gallery>
         </div>
 
         <div class="name-price">
@@ -27,14 +28,12 @@
 
         <div class="address"> {{address}} </div>
            
-        <div class="rating">
-          <span v-for="i in stars.numFullStars" :key="i" class="fa fa-star"></span>
-          <span v-for="j in stars.numHalfStars" :key="j+10" class="fa fa-star-half-o"></span>
-          <span v-for="k in (5- stars.numFullStars - stars.numHalfStars)" :key="k+20" class="fa fa-star-o checked"></span>  
-        </div>
+        <restaurant-rating
+          :rating="restaurant.rating">
+        </restaurant-rating>
 
         <div class="reviewBtn"
-          @click="flipped=true">
+          @click="flipped=true;">
           Top Reviews
         </div>
 
@@ -43,11 +42,16 @@
       <div class="back"
         v-else
         :key="2">
-        <p> Waiting for others to vote</p>
-                <div class="reviewBtn"
+
+        <restaurant-card-reviews
+          :reviews="reviews">
+        </restaurant-card-reviews>
+
+        <div class="reviewBtn"
           @click="flipped=false">
-          Top Reviews
+          Back
         </div>
+
       </div>
      
     </transition>
@@ -58,11 +62,14 @@
 <script>
 
 import RestaurantCardGallery from "@/components/RestaurantCardGallery.vue";
-
+import RestaurantCardReviews from "@/components/RestaurantCardReviews.vue";
+import RestaurantRating from "@/components/RestaurantRating.vue";
 export default {
   name: "RestaurantCard",
   components: {
-    RestaurantCardGallery
+    RestaurantCardGallery,
+    RestaurantCardReviews,
+    RestaurantRating
   },
   props: {
     restaurant : Object,
@@ -70,21 +77,16 @@ export default {
   },
   data() {
     return {
-      flipped: false
+      flipped: false,
+      submitClass: false,
+      flipClass: false
     }
   },
   computed: {
     address: function() {
       return this.restaurant.location.display_address[0];
     },
-    stars: function() {
-      let numFullStars =  Math.floor(this.restaurant.rating);
-      let numHalfStars = Math.ceil(this.restaurant.rating - numFullStars);
-      return {
-        'numFullStars': numFullStars,
-        'numHalfStars': numHalfStars
-      }
-    },
+    
   },
   asyncComputed: {
     reviews: async function () {
@@ -98,8 +100,29 @@ export default {
       .then(resp => resp.data);
     }
   },
-  methods: {
+  watch: {
+    submitted: function() {
+      if(this.submitted) {
+        
+        if(this.flipped) 
+          this.flipped = false;
 
+        this.submitClass = true;
+
+        setTimeout(() => {
+          this.submitClass = false;
+        }, 1000);
+      
+      }
+    },
+    flipped: function() {
+      if (!this.submitted) {
+      this.flipClass = true;
+      setTimeout(() => {
+        this.flipClass = false;
+      }, 1200);
+      }
+    }
   }
 }
 
@@ -164,9 +187,6 @@ export default {
   animation: no 1s;
 }
 
-.flip {
-  animation: flip 1s;
-}
 
 @keyframes yes {
   0% { 
@@ -189,16 +209,41 @@ export default {
   }
 }
 
+/* Flip animation */
+.flip-fade-enter-active {
+    transition: all .2s ease-out;
+    transition-delay: .8s;
+}
+.flip-fade-leave-active {
+    transition: all .2s ease-in;
+}
+.flip-fade-enter {
+    transform: translateY(15px);
+    opacity: 0;
+} 
+.flip-fade-leave-to {
+    transform: translateY(-15px);
+    opacity: 0;
+}
+
+.flip {
+  animation: flip .8s;
+  animation-delay: .2s;
+
+}
+.unflip {
+  animation: flip .8s;
+  animation-delay: .2s;
+}
+
+
 @keyframes flip {
-  0% { 
-    tranform:
-  }
-  50% {
+  to {
     transform: rotateY(180deg);
   }
-
-  100% {
-    transform: rotate(0deg) rotateY(180deg);
-  }
 }
+
+
+
+
 </style>

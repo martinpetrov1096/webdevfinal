@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      playing: true,
+      playing: false,
       socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
       current : {"id":"K5FVrRw9HLMLrUarxZOrLA","alias":"rajas-tandoor-davis-2","name":"Raja's Tandoor","image_url":"https://s3-media4.fl.yelpcdn.com/bphoto/MNwZGfDYNh1DVxv4YEeLnA/o.jpg","is_claimed":true,"is_closed":false,"url":"https://www.yelp.com/biz/rajas-tandoor-davis-2?adjust_creative=rli8547ivA_z5fyGAqu2ug&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=rli8547ivA_z5fyGAqu2ug","phone":"+15307539664","display_phone":"(530) 753-9664","review_count":617,"categories":[{"alias":"indpak","title":"Indian"}],"rating":4,"location":{"address1":"207 3rd St","address2":"Ste 230","address3":"","city":"Davis","zip_code":"95616","country":"US","state":"CA","display_address":["207 3rd St","Ste 230","Davis, CA 95616"],"cross_streets":""},"coordinates":{"latitude":38.543752,"longitude":-121.746706},"photos":["https://s3-media4.fl.yelpcdn.com/bphoto/MNwZGfDYNh1DVxv4YEeLnA/o.jpg","https://s3-media2.fl.yelpcdn.com/bphoto/TYMPYgZnFU23LLhacClIcQ/o.jpg","https://s3-media1.fl.yelpcdn.com/bphoto/FcbzaA-iX7Jacgud6MqAbg/o.jpg"],"price":"$","hours":[{"open":[{"is_overnight":false,"start":"1100","end":"2030","day":0},{"is_overnight":false,"start":"1100","end":"2030","day":1},{"is_overnight":false,"start":"1100","end":"2030","day":2},{"is_overnight":false,"start":"1100","end":"2030","day":3},{"is_overnight":false,"start":"1100","end":"2030","day":4},{"is_overnight":false,"start":"1100","end":"2030","day":5},{"is_overnight":false,"start":"1100","end":"2030","day":6}],"hours_type":"REGULAR","is_open_now":true}],"transactions":["pickup","delivery"]}
     };
@@ -69,9 +69,7 @@ export default {
 
   methods: {
     startGame(){
-
       this.socket.emit("startGame");
-
     },
     submitVote(vote) {
       switch(vote) {
@@ -156,7 +154,6 @@ export default {
 
 .game {
   height: inherit;
-
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -164,7 +161,7 @@ export default {
 }
 
 .rest-view {
-    transition: box-shadow .3s ease-in-out;
+  transition: box-shadow .3s ease-in-out;
 }
 
 .btn-vote {
@@ -202,16 +199,15 @@ export default {
   transition: text-shadow .3s ease-in-out;
   animation: slide-roll-exit 1s ease-in-out;
 }
-
 .slide-roll-enter-active {
   position: relative;
   left: calc(50% + 300px);
   animation: slide-roll-enter 1s ease-in-out;
-  
 } 
 .slide-roll-enter-active .rest-view {
   box-shadow: none;
 }
+
 @keyframes slide-roll-exit {
   0% {
     left: calc(50% - 150px);
