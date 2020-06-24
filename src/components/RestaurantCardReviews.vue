@@ -43,6 +43,7 @@ export default {
 #restCardReviews {
   height: 100%;
   width: 100%;
+  overflow: scroll;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -50,18 +51,26 @@ export default {
 
 .review {
   flex-grow: 1;
+  padding: 10px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE10+ */
 }
 
-.profile {
-  display: flex;
-  align-items: flex-end;
-
+/* Chrome */
+.review::-webkit-scrollbar { 
+  width: 0px;
+  background: transparent;
 }
+
+
 
 .username {
   font-weight: bold;
   color: #FF616F;
   text-decoration: none;
+}
+.username:hover {
+  text-decoration: underline !important;
 }
 
 .username::before {

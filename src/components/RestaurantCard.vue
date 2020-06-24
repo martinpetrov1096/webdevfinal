@@ -13,7 +13,7 @@
 
       <div class="front"
         v-if="!flipped"
-        :key="1">
+        :key="restaurant.alias">
 
         <div class="img-container">
             <restaurant-card-gallery
@@ -137,6 +137,7 @@ export default {
 }
 
 .front, .back {
+  transition: all .1s linear;
   width: 100%;
   height: 100%;
     display: flex;
@@ -187,6 +188,13 @@ export default {
   animation: no 1s;
 }
 
+.yes > * {
+  opacity: 0;
+}
+
+.no > * {
+  opacity: 0;
+}
 
 @keyframes yes {
   0% { 
