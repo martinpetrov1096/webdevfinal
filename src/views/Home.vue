@@ -1,7 +1,7 @@
 <template>
-  <div id="home" class="container">
+  <div id="home">
 
-    <div class="card-sm shadow-l">
+    <div class="container card-sm shadow-l">
 
       <div class="joinGame">
         <input
@@ -9,14 +9,16 @@
           v-model="joinCode"
           type="text"
         >
-        <div 
+        <h2 
           @click="joinGame()" 
-          class="btn-sm">
-        </div>
+          class="btn btn-rect-sm prim-bg">
+          Join
+        </h2>
       </div>
       
       <h1>OR</h1>
       <div class="createGame">
+
         <div class="searchBar">
           <input
             type="text"
@@ -27,6 +29,7 @@
             @keyup="getRecommended"
           />
         </div>
+
         <datalist id="terms">
           <option 
             v-for="term in autoComplete" 
@@ -46,11 +49,14 @@
           types= "(cities)">
         </vue-google-autocomplete>
           
-        <div 
+        <h2 
           @click="createGame()" 
-          class="btn-lg">
-        </div>
+          class="start btn btn-rect-lg prim-bg">
+          Create Game
+        </h2>
+
       </div>
+
     </div>
   </div>
 </template>
@@ -114,37 +120,53 @@ export default {
 </script>
 
 <style scoped>
-
-.container {
+#home {
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
 }
 
-h1 {
-  text-align: center;
+.container {
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .joinGame {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+  flex-shrink: 1;
+  flex-grow: 2;
+  width: inherit;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
 }
   
 .createGame {
+  flex-shrink: 1;
+  flex-grow: 3;
   display: flex;
   flex-flow: column nowrap;
   justify-content: stretch;
   align-items: stretch;
 }
 
-.searchBar {
-    margin-bottom: 10px;
-    padding:10px;
+.start {
+  align-self: center;
 }
 
+input {
+  font-size: 14px;
+  height: 20px;
+  padding: 5px !important;
+  margin: 15px 0;
+}
 
-
-
+input > * {
+  margin: 0;
+  padding: 0;
+}
 </style>

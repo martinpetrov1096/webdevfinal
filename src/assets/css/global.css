@@ -1,30 +1,48 @@
+/*******************************/
+/*********** IMPORTS ***********/
+/*******************************/
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
-body {
-    font-family: 'Lato', sans-serif;
-    
+
+/*******************************/
+/********* THEME COLORS ********/
+/*******************************/
+.prim {
+    color: #455a64;
+}
+.prim-bg {
+    background-color: #455a64;
+    color: white;
 }
 
+.sec {
+    color: #FF616F;
+}
+
+.sec-bg {
+    background-color: #FF616F;
+    color: white;
+
+}
 /*******************************/
 /********* CUSTOM TYPES ********/
 /*******************************/
 .card-sm {
-    flex-grow: 1;
-    max-width: 300px;
+    width: 300px;
     height: 300px;
     border-radius: 30px;
     padding: 30px;
     background-color: #f5f5f5;
 }
 .card-lg {
-    flex-grow: 1;
     width: 300px;
     height: 500px;
     border-radius: 30px;
     padding: 50px;
     background-color: #f5f5f5;
 }
+
 .shadow-s {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
 }
@@ -34,30 +52,53 @@ body {
 .shadow-l {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
-.btn-lg {
-    align-self: center;
-    width: 60px;
-    height: 60px;
-    outline: none;
-    border: none;
-    border-radius: 100%;
-    font-size: 18px;
-    background-color:#455a64;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
-}
 
-.btn-sm {
-    align-self: center;
-    width: 40px;
-    height: 40px;
+.btn {
+    flex-grow: 0;
+    flex-shrink: 0;
     outline: none;
     border: none;
-    border-radius: 100%;
-    font-size: 18px;
-    background-color:#455a64;
+    color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);  
 }
+.btn-rect-sm {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+.btn-rect-lg {
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 13px;
+}
+.btn-cir-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+.btn-cir-lg {
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+}
 
+.invisible {
+    visibility: hidden;
+}
+
+/*******************************/
+/******** Mobile Layout ********/
+/*******************************/
+@media only screen and (max-width: 600px) {
+    .card-lg, .card-sm {
+        height: 100%;
+        max-height: 300px;
+        width: auto;
+        margin: 20px;
+        max-width: 300px !important;
+        flex-basis: 100%;
+    }
+}
 /*******************************/
 /********* Animations **********/
 /*******************************/

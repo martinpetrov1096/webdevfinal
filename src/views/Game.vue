@@ -7,7 +7,7 @@
         key="game">
 
         <btn-reject class="btn-vote"
-          v-if="!voteSubmitted"
+         :class="{'invisible':voteSubmitted}"
           @click.native="submitVote(0)">
         </btn-reject> 
 
@@ -18,7 +18,7 @@
         </restaurant-card>
 
         <btn-heart class="btn-vote"
-        v-if="!voteSubmitted"
+          :class="{'invisible':voteSubmitted}"
           @click.native="submitVote(1)">
         </btn-heart> 
 
@@ -27,11 +27,13 @@
       <div class="lobby"
         v-else
         key="lobby">
+
         <h3>Share this url with friends </h3> 
         <div class="startBtn"
           @click="startGame()">
         </div>
         <h3>Click start when they have all joined</h3> 
+
       </div>
 
     </transition>
@@ -154,6 +156,7 @@ export default {
 
 .game {
   height: inherit;
+
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -165,32 +168,8 @@ export default {
 }
 
 .btn-vote {
-  margin:20px 10px;
+  margin: 20px 10px;
 }
-
-
-
-/* Mobile Device Layout */
-@media only screen and (max-width: 600px) {
-  .game {
-    flex-flow: row wrap;
-    justify-content: space-around;
-  }
-  .rest-view {
-    height: calc(100% - 240px) !important;
-    width: auto;
-    margin: 0 20px;
-    max-width: 300px !important;
-    flex-basis: 100%;
-    order: -1;
-  }
-  .btn-vote {
-    flex-basis: calc(50% - 20px);
-  }
-
-}
-
-
 
 /* Start Game Animation */
 .slide-roll-leave-active {
@@ -222,6 +201,25 @@ export default {
   }
   100% {
     left: 0;
+  }
+}
+
+/* Mobile Device Layout */
+@media only screen and (max-width: 600px) {
+  .game {
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+  .rest-view {
+    order: -1;
+    height: calc(100% - 240px) !important;
+    width: auto;
+    margin: 0 20px;
+    max-width: 300px !important;
+    flex-basis: 100%;
+  }
+  .btn-vote {
+    flex-basis: calc(50% - 20px);
   }
 }
 

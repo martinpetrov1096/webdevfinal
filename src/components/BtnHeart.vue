@@ -1,5 +1,5 @@
 <template>
-    <div id="btnHeart" class="btn"></div>
+    <div id="btnHeart" class="btn-hrt"></div>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default {
 }
 </script>
 <style scoped>
-.btn {
+.btn-hrt {
     width: 100px;
     height: 100px;
     outline: none;

@@ -13,7 +13,7 @@
          {{review.text}}
       </p>
       
-      <a class="username"
+      <a class="username sec"
         :href="review.user.profile_url"> 
         {{review.user.name}} 
       </a>
@@ -39,7 +39,6 @@ export default {
 </script>
 
 <style scoped>
-
 #restCardReviews {
   height: 100%;
   width: 100%;
@@ -47,32 +46,28 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
+    scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE10+ */
+}
+/* Chrome */
+#restCardReviews::-webkit-scrollbar { 
+  width: 0px;
+  background: transparent;
 }
 
 .review {
   flex-grow: 1;
   padding: 10px;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE10+ */
 }
-
-/* Chrome */
-.review::-webkit-scrollbar { 
-  width: 0px;
-  background: transparent;
-}
-
-
 
 .username {
+  font-size: 12px;
   font-weight: bold;
-  color: #FF616F;
   text-decoration: none;
 }
 .username:hover {
   text-decoration: underline !important;
 }
-
 .username::before {
   content: "-";
 }

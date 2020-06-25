@@ -11,11 +11,11 @@
     </transition>
     <div class="nav-container">
 
-      <div class="nav-circle"
+      <div class="nav-circle prim-bg"
         v-for="(url, i) in img_urls"
         :key="i"
         @click="index=i"
-        :class="{'selected': index == i}">
+        :class="{'sec-bg': index == i}">
 
       </div>
     </div>
@@ -65,13 +65,10 @@ export default {
 }
 
 .nav-circle{
-  background-color: grey;
   width: 20px;
   height: 20px;
   border-radius: 100%;
   margin: 5px;
 }
-.selected {
-  background-color: #FF616F;
-}
+
 </style>

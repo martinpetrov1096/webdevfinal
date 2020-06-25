@@ -32,9 +32,9 @@
           :rating="restaurant.rating">
         </restaurant-rating>
 
-        <div class="reviewBtn"
+        <div class="reviewBtn btn btn-rect-sm sec-bg"
           @click="flipped=true;">
-          Top Reviews
+          Reviews
         </div>
 
       </div>
@@ -47,7 +47,7 @@
           :reviews="reviews">
         </restaurant-card-reviews>
 
-        <div class="reviewBtn"
+        <div class="reviewBtn btn btn-rect-sm sec-bg"
           @click="flipped=false">
           Back
         </div>
@@ -60,7 +60,6 @@
 </template>
 
 <script>
-
 import RestaurantCardGallery from "@/components/RestaurantCardGallery.vue";
 import RestaurantCardReviews from "@/components/RestaurantCardReviews.vue";
 import RestaurantRating from "@/components/RestaurantRating.vue";
@@ -125,27 +124,18 @@ export default {
     }
   }
 }
-
 </script>
 
 <style>
-
-
-
-#restaurantCard {
-
-}
 
 .front, .back {
   transition: all .1s linear;
   width: 100%;
   height: 100%;
-    display: flex;
+  display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
 }
-
-
 
 .img-container {
   height: 60%;
@@ -155,7 +145,6 @@ export default {
 }
  
 .name-price {
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -168,15 +157,9 @@ export default {
 
 .reviewBtn {
   align-self: flex-end;
-  border-radius: 10px;
-  border: 1px solid black;
-  height: 35px;
-  width: 100px;
+
+
   
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
 }
 
@@ -216,6 +199,26 @@ export default {
     transform: translateX(0) rotateY(180deg);
   }
 }
+@-webkit-keyframes yes {
+  0% { 
+  }
+  50% {
+    -webkit-transform: translateX(400px) rotate(45deg) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: translateX(0) rotateY(180deg);
+  }
+}
+@-webkit-keyframes no {
+  0% { 
+  }
+  50% {
+    -webkit-transform: translateX(-400px) rotate(-45deg) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: translateX(0) rotateY(180deg);
+  }
+}
 
 /* Flip animation */
 .flip-fade-enter-active {
@@ -244,14 +247,15 @@ export default {
   animation-delay: .2s;
 }
 
-
 @keyframes flip {
   to {
     transform: rotateY(180deg);
   }
 }
-
-
-
+@-webkit-keyframes flip {
+  to {
+    -webkit-transform: rotateY(180deg);
+  }
+}
 
 </style>

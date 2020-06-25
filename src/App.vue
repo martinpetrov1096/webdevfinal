@@ -1,14 +1,16 @@
 <template>
+
   <div id="app">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <app-bg class="bg"></app-bg>
     <transition name="slide-fade" mode="out-in">
-      <router-view id="view"></router-view >
+      <router-view class="view"></router-view >
     </transition>
   </div>
 </template>
 
 <script>
-
 import AppBg from "@/components/AppBg.vue";
 
 export default {
@@ -17,7 +19,6 @@ export default {
     AppBg
   }
 }
-
 </script>
 
 <style>
@@ -29,24 +30,16 @@ export default {
 body,
 html,
 .bg,
-#app
+#app,
+.view
 {
   overflow: hidden;
   width: 100%;
   height: 100%;
+  font-family: 'Lato', sans-serif;
 }
 
-#view {
-  height: calc(100% - 60px);
-  width: calc(100% - 60px);
-  padding: 30px;
-}
 
-@media only screen and (max-width: 600px) {
-  #view {
-    height: calc(100% - 12px);
-    width: calc(100% - 12px);
-    padding: 5px;
-  }
-}
+
+
 </style>
