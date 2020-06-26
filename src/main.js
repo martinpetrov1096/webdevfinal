@@ -17,11 +17,6 @@ let socket = Object;
 
 Vue.use(AsyncComputed);
 
-
-
-
-
-
 // Vuex Store
 Vue.use(Vuex);
 const store = new Vuex.Store({

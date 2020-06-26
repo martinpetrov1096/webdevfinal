@@ -8,27 +8,22 @@
         <input
           placeholder="Enter Code" 
           v-model="joinCode"
-          type="text"
-        >
-        <h2 
-          @click="joinGame()" 
-          class="btn btn-rect-sm prim-bg">
+          type="text">
+        <h2 class="btn btn-rect-sm prim-bg"
+          @click="joinGame()">
           Join
         </h2>
       </div>
       
       <h1>OR</h1>
+
       <div class="createGame">
 
         <div class="searchBar">
-          <input
-            type="text"
-            list="terms"
-            id="input-search"
+          <input type="text" placeholder="Enter Keywords"
             v-model="searchText"
-            placeholder="Enter Keywords"
-            @keyup="getRecommended"
-          />
+            list="terms"
+            @keyup="getRecommended"/>
         </div>
 
         <datalist id="terms">
@@ -50,9 +45,8 @@
           types= "(cities)">
         </vue-google-autocomplete>
           
-        <h2 
-          @click="createGame()" 
-          class="start btn btn-rect-lg prim-bg">
+        <h2 class="start btn btn-rect-lg prim-bg"
+          @click="createGame()">
           Create Game
         </h2>
 
@@ -117,9 +111,6 @@ export default {
     joinGame() {
       this.$store.dispatch("gameJoin", this.joinCode);
     }
-  },
-  mounted() {
-
   }
 }
 </script>
@@ -140,8 +131,6 @@ export default {
 }
 
 .container {
-
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
@@ -176,7 +165,6 @@ input {
   padding: 5px !important;
   margin: 10px 0;
 }
-
 input > * {
   margin: 0;
   padding: 0;

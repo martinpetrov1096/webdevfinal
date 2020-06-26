@@ -23,8 +23,8 @@
         </div>
 
         <div class="name-price">
-          <div class="name">{{this.restaurant.name}}</div>
-          <div class="price">{{this.restaurant.price}}</div>
+          <div class="name">{{restaurant.name}}</div>
+          <div class="price">{{restaurant.price}}</div>
         </div>
 
         <div class="address"> {{address}} </div>
