@@ -34,15 +34,16 @@
           </option>
         </datalist>
                 
-        <vue-google-autocomplete
-          class="searchBar"
+        <vue-google-autocomplete id="map" class="searchBar"
+         
           v-on:placechanged="getAddressData"
           ref="address"
-          id="map"
+
           classname="form-control"
           placeholder="Location"
           country="us"
-          types= "(cities)">
+          types= "(cities)"
+          >
         </vue-google-autocomplete>
           
         <h2 class="start btn btn-rect-lg prim-bg"

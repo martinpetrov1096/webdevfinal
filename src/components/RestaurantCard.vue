@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     address: function() {
-      return this.restaurant.location.display_address[0];
+      return this.restaurant.location.display_address1;
     },
     
   },

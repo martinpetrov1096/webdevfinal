@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import Axios from 'axios';
 import AsyncComputed from 'vue-async-computed';
 import io from 'socket.io-client';
+
 import "@/assets/css/reset.css";
 import "@/assets/css/global.css";
 
@@ -12,12 +13,18 @@ import "@/assets/css/global.css";
 ////// CONFIGURE SERVICES //////
 ////////////////////////////////
 Vue.config.productionTip = false
+
+
 Vue.prototype.$http = Axios;
-let socket = Object;
 
 Vue.use(AsyncComputed);
 
-// Vuex Store
+
+
+let socket = Object;
+////////////////////////////////
+////// VUEX STORE CONFIG ///////
+////////////////////////////////
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
