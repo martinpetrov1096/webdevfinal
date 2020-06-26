@@ -112,11 +112,11 @@
 .slide-fade-leave-active {
     transition: all .2s ease-in;
 }
-  .slide-fade-enter {
+.slide-fade-enter {
     transform: translateY(15px);
     opacity: 0;
 } 
-  .slide-fade-leave-to {
+.slide-fade-leave-to {
     transform: translateY(-15px);
     opacity: 0;
 }

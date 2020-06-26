@@ -2,24 +2,22 @@
   <div class="container">
     <transition
       name="slide-roll"> 
+
       <div class="game"
-        v-if="playing"
+        v-if="$store.getters.gameState==2 && $store.getters.current != undefined"
         key="game">
 
         <btn-reject class="btn-vote"
          :class="{'invisible':voteSubmitted}"
-          @click.native="submitVote(0)">
+          @click.native="$store.dispatch('voteNo')">
         </btn-reject> 
-
         <restaurant-card class="rest-view"
-          :restaurant="current"
-          :submitted="voteSubmitted">
-          
+          :restaurant="$store.getters.current"
+          :submitted="$store.getters.voteState">
         </restaurant-card>
-
         <btn-heart class="btn-vote"
           :class="{'invisible':voteSubmitted}"
-          @click.native="submitVote(1)">
+          @click.native="$store.dispatch('voteYes')">
         </btn-heart> 
 
       </div>
@@ -27,13 +25,11 @@
       <div class="lobby"
         v-else
         key="lobby">
-
         <h3>Share this url with friends </h3> 
         <div class="startBtn"
-          @click="startGame()">
+          @click="$store.dispatch('gameStart')">
         </div>
         <h3>Click start when they have all joined</h3> 
-
       </div>
 
     </transition>
@@ -41,7 +37,7 @@
 </template>
 
 <script>
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 import BtnHeart from "@/components/BtnHeart.vue";
 import BtnReject from "@/components/BtnReject.vue";
 import RestaurantCard from "@/components/RestaurantCard.vue";
@@ -53,64 +49,11 @@ export default {
     BtnReject,
     RestaurantCard
   },
-  data() {
-    return {
-      playing: true,
-      socket : io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${this.$route.params.joinCode}`}),
-      current : {"id":"K5FVrRw9HLMLrUarxZOrLA","alias":"rajas-tandoor-davis-2","name":"Raja's Tandoor","image_url":"https://s3-media4.fl.yelpcdn.com/bphoto/MNwZGfDYNh1DVxv4YEeLnA/o.jpg","is_claimed":true,"is_closed":false,"url":"https://www.yelp.com/biz/rajas-tandoor-davis-2?adjust_creative=rli8547ivA_z5fyGAqu2ug&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=rli8547ivA_z5fyGAqu2ug","phone":"+15307539664","display_phone":"(530) 753-9664","review_count":617,"categories":[{"alias":"indpak","title":"Indian"}],"rating":4,"location":{"address1":"207 3rd St","address2":"Ste 230","address3":"","city":"Davis","zip_code":"95616","country":"US","state":"CA","display_address":["207 3rd St","Ste 230","Davis, CA 95616"],"cross_streets":""},"coordinates":{"latitude":38.543752,"longitude":-121.746706},"photos":["https://s3-media4.fl.yelpcdn.com/bphoto/MNwZGfDYNh1DVxv4YEeLnA/o.jpg","https://s3-media2.fl.yelpcdn.com/bphoto/TYMPYgZnFU23LLhacClIcQ/o.jpg","https://s3-media1.fl.yelpcdn.com/bphoto/FcbzaA-iX7Jacgud6MqAbg/o.jpg"],"price":"$","hours":[{"open":[{"is_overnight":false,"start":"1100","end":"2030","day":0},{"is_overnight":false,"start":"1100","end":"2030","day":1},{"is_overnight":false,"start":"1100","end":"2030","day":2},{"is_overnight":false,"start":"1100","end":"2030","day":3},{"is_overnight":false,"start":"1100","end":"2030","day":4},{"is_overnight":false,"start":"1100","end":"2030","day":5},{"is_overnight":false,"start":"1100","end":"2030","day":6}],"hours_type":"REGULAR","is_open_now":true}],"transactions":["pickup","delivery"]}
-    };
-  },
   computed: {
     voteSubmitted: function() {
-      if (this.$store.getters.voteState == 0)
-        return false;
-      else
-        return true;
+      return this.$store.getters.voteState != 0;
     }
   },
-
-  methods: {
-    startGame(){
-      this.socket.emit("startGame");
-    },
-    submitVote(vote) {
-      switch(vote) {
-        case 0: 
-          this.$store.commit("voteNo");
-          break;
-        case 1: 
-          this.$store.commit("voteYes");
-          break;
-      }
-      // Wait 1 second just to show the animation
-      setTimeout(()=> {
-        this.socket.emit("submitVote", vote);
-      }, 1000);
-    }
-  },
-  mounted() {
-    this.socket.emit("joinGame");
-    
-    this.socket.on("joinedGame", () => {
-    });
-    
-    this.socket.on("startedGame", data => {
-      this.current = data["restaurant"];
-      this.$store.commit("voteReset");
-      this.playing = true;
-    });
-    
-    this.socket.on("nextChoice", data => {
-      this.current = data["restaurant"];
-      this.$store.commit("voteReset");
-      this.playing=true;
-    });
-    
-    this.socket.on("endedGame", data => {
-     this.$store.dispatch("gameEnd", this.current);
-     console.log(data);
-    });
-  }
   
 };
 </script>

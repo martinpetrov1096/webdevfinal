@@ -1,8 +1,9 @@
+
 <template>
   <div id="restaurantCard" class="card-lg shadow-l"
     :class="{ 
-      'no': $store.getters.voteState==1 && submitClass==true,
-      'yes': $store.getters.voteState==2 && submitClass==true,
+      'no': submitted==1 && submitClass==true,
+      'yes': submitted==2 && submitClass==true,
       'flip': flipped==true && flipClass==true,
       'unflip': flipped==false && flipClass==true,
     }">
@@ -72,7 +73,7 @@ export default {
   },
   props: {
     restaurant : Object,
-    submitted: Boolean
+    submitted: Number
   },
   data() {
     return {
@@ -105,9 +106,7 @@ export default {
         
         if(this.flipped) 
           this.flipped = false;
-
         this.submitClass = true;
-
         setTimeout(() => {
           this.submitClass = false;
         }, 1000);
@@ -116,10 +115,10 @@ export default {
     },
     flipped: function() {
       if (!this.submitted) {
-      this.flipClass = true;
-      setTimeout(() => {
-        this.flipClass = false;
-      }, 1200);
+        this.flipClass = true;
+        setTimeout(() => {
+          this.flipClass = false;
+        }, 1200);
       }
     }
   }
@@ -127,7 +126,6 @@ export default {
 </script>
 
 <style>
-
 .front, .back {
   transition: all .1s linear;
   width: 100%;
@@ -136,12 +134,10 @@ export default {
   flex-flow: column nowrap;
   justify-content: flex-start;
 }
-
 .img-container {
   height: 60%;
   flex-grow: 1;
   margin-bottom: 20px;
-
 }
  
 .name-price {
@@ -149,20 +145,14 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
-
 .name {
   font-size: x-large;
   font-weight: 900;
 }
-
 .reviewBtn {
   align-self: flex-end;
-
-
   
-
 }
-
 /* Submit Animation */
 .yes {
   animation: yes 1s;
@@ -170,15 +160,12 @@ export default {
 .no {
   animation: no 1s;
 }
-
 .yes > * {
   opacity: 0;
 }
-
 .no > * {
   opacity: 0;
 }
-
 @keyframes yes {
   0% { 
   }
@@ -219,7 +206,6 @@ export default {
     -webkit-transform: translateX(0) rotateY(180deg);
   }
 }
-
 /* Flip animation */
 .flip-fade-enter-active {
     transition: all .2s ease-out;
@@ -236,17 +222,14 @@ export default {
     transform: translateY(-15px);
     opacity: 0;
 }
-
 .flip {
   animation: flip .8s;
   animation-delay: .2s;
-
 }
 .unflip {
   animation: flip .8s;
   animation-delay: .2s;
 }
-
 @keyframes flip {
   to {
     transform: rotateY(180deg);
@@ -257,5 +240,4 @@ export default {
     -webkit-transform: rotateY(180deg);
   }
 }
-
 </style>

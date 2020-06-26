@@ -1,6 +1,7 @@
 <template>
   <div id="home">
 
+    <h1 class="title">Restaurant Tinder</h1>
     <div class="container card-sm shadow-l">
 
       <div class="joinGame">
@@ -58,6 +59,7 @@
       </div>
 
     </div>
+
   </div>
 </template>
 
@@ -113,8 +115,11 @@ export default {
       });
     },
     joinGame() {
-      this.$store.dispatch("gameStart", this.joinCode);
+      this.$store.dispatch("gameJoin", this.joinCode);
     }
+  },
+  mounted() {
+
   }
 }
 </script>
@@ -127,7 +132,15 @@ export default {
   align-items: center;
 }
 
+.title {
+  flex-basis: 20%;
+  flex-shrink: 2;
+  font-size: 10vw;
+  color: white;
+}
+
 .container {
+
 
   display: flex;
   flex-flow: column nowrap;
@@ -142,7 +155,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
+
 }
   
 .createGame {
@@ -160,13 +173,16 @@ export default {
 
 input {
   font-size: 14px;
-  height: 20px;
   padding: 5px !important;
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 input > * {
   margin: 0;
   padding: 0;
+}
+
+.about {
+  align-self: flex-start;
 }
 </style>

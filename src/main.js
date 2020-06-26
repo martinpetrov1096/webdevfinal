@@ -4,6 +4,7 @@ import router from "./router";
 import Vuex from "vuex";
 import Axios from 'axios';
 import AsyncComputed from 'vue-async-computed';
+import io from 'socket.io-client';
 import "@/assets/css/reset.css";
 import "@/assets/css/global.css";
 
@@ -12,8 +13,14 @@ import "@/assets/css/global.css";
 ////////////////////////////////
 Vue.config.productionTip = false
 Vue.prototype.$http = Axios;
+let socket = Object;
 
 Vue.use(AsyncComputed);
+
+
+
+
+
 
 // Vuex Store
 Vue.use(Vuex);
@@ -21,8 +28,9 @@ const store = new Vuex.Store({
   state: {
     bgColor: "red",
     voteState: 0, // 0 = not voted, 1 = voted no, 2 = voted yes
-    gameState: 1,
-    winner: ""
+    gameState: 0, // 0 = not started, 1 = lobby, 2 = playing, 3 = ended
+    current: {},
+    socket: Object,
   },
   getters: {
     gameState: state => {
@@ -34,63 +42,92 @@ const store = new Vuex.Store({
     bgColor: state => {
       return state.bgColor;
     },
-    winner: state => {
-      return state.winner;
+    current: state => {
+      return state.current;
     }
   },
   mutations: {
-    gameReset(state) {
-      state.gameState = 0;
-      state.voteState = 0;
-      state.winner = "";
-      state.bgColor = "red";
+    setGameState(state, gState) {
+      state.gameState = gState;
     },
-    gameStart(state) {
-      state.gameState = 1;
-    }, 
-    gameEnd (state, restaurant) {
-      state.gameState = 2;
-      state.bgColor = "green";
-      state.winner = restaurant;
-    },
-
-    
-    voteReset(state) {
-      if (state.gameState == 1) {
-        state.voteState = 0;
-        state.bgColor = "";
+    setVote(state, vote) {
+      if (state.gameState == 2) {
+        state.voteState = vote;
       }
     },  
-    voteNo(state) {
-      if (state.gameState == 1) {
-        state.voteState = 1;
-        setTimeout(() => {
+    setBg(state, color) {
+      switch(color) {
+        case "red":
           state.bgColor = "red";
-         }, 300);
+          break;
+        case "green":
+          state.bgColor = "green";
+          break;
+        default: 
+          state.bgColor = "";
+          break;
       }
     },
-    voteYes(state) {
-      if (state.gameState == 1) {
-        state.voteState = 2;
-        setTimeout(() => {
-          state.bgColor = "green";
-         }, 300);
-      }
+    setCur(state, restaurant) {
+      console.log(restaurant);
+      state.current = restaurant;
     }
+
   },
   actions: {
     gameReset(context) {
-      context.commit("gameReset");
+      context.commit("setGameState", 0);
+      context.commit("setBg", "red");
       router.push("/");
     },
-    gameStart(context, joinCode) {
-      context.commit("gameStart", joinCode);
-      router.push("/game/"+joinCode);
+
+    /* This one gets manually called somewhere */
+    gameJoin(context, joinCode) {
+      socket = io("https://picayune-responsible-jackfruit.glitch.me/",  {query: `joinCode=${joinCode}`});
+      socket.emit("joinGame");
+      
+      socket.on("joinedGame", () => {
+        context.commit("setGameState", 1);
+        router.push("/game/" + joinCode);
+      });
+      socket.on("startedGame", data => {
+        context.commit("setCur", data["restaurant"]);
+        context.commit("setGameState", 2);
+        context.commit("setVote", 0);
+        context.commit("setBg", "");
+      });
+      socket.on("nextChoice", data => {
+        console.log("hereinnextchoice");
+        context.commit("setCur", data["restaurant"]);
+        context.commit("setVote", 0);
+        context.commit("setBg", "");
+      });
+      socket.on("endedGame", () => {
+        console.log("herefds");
+        context.commit("setGameState", 3);
+        context.commit("setBg", "green");
+        router.push("/winner");
+        socket.disconnect();
+      });
     },
-    gameEnd(context, restaurant) {
-      context.commit("gameEnd", restaurant);
-      router.push("/winner");
+    gameStart(context) {
+      context.commit("setGameState", 2);
+      socket.emit("startGame");
+    },
+    voteNo(context) {
+      setTimeout(() => {
+        socket.emit("submitVote", 0);
+      },1000);
+      context.commit("setVote", 1);
+    },
+    voteYes(context) {
+      console.log("herreer");
+      setTimeout(() => {
+        socket.emit("submitVote", 1);
+      },1000);
+      context.commit("setVote", 2);
     }
+    
   }
 });
 ////////////////////////////////
