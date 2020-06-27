@@ -16,44 +16,36 @@
       <div class="front"
         v-if="!flipped"
         :key="restaurant.alias">
-
         <div class="img-container">
             <restaurant-card-gallery
               :img_urls="restaurant.photos">
             </restaurant-card-gallery>
         </div>
-
         <div class="name-price">
-          <div class="name">{{restaurant.name}}</div>
+          <a class="name"
+            @click="openInYelp()">{{restaurant.name}}</a>
           <div class="price">{{restaurant.price}}</div>
         </div>
-
         <div class="address"> {{this.restaurant.location.address1}} </div>
-           
         <restaurant-rating
           :rating="restaurant.rating">
         </restaurant-rating>
-
         <div class="reviewBtn btn btn-rect-sm sec-bg"
           @click="flipped=true;">
           Reviews
         </div>
-
       </div>
 
       <div class="back"
         v-else
         :key="2">
-
         <restaurant-card-reviews
           :reviews="reviews">
         </restaurant-card-reviews>
-
         <div class="reviewBtn btn btn-rect-sm sec-bg"
           @click="flipped=false">
           Back
         </div>
-
       </div>
      
     </transition>
@@ -86,12 +78,16 @@ export default {
       flipClass: false
     }
   },
-  computed: {
+  methods: {
+    openInYelp: function() {
+      window.open(this.restaurant.url, "_blank");
+    }
+  
   },
   asyncComputed: {
     reviews: async function () {
       return await this.$http({
-        url: "http://192.168.1.5:3000/reviews",
+        url: this.$serverUrl + "/reviews",
         methods: "get",
         params: {
           "id": this.restaurant.id
@@ -148,6 +144,9 @@ export default {
 .name {
   font-size: x-large;
   font-weight: 900;
+}
+.name:hover {
+  text-decoration: underline;
 }
 .reviewBtn {
   align-self: flex-end;

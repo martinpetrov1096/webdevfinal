@@ -73,8 +73,6 @@ export default {
   align-items: center;
 }
 
-
-
 .game {
   height: inherit;
 

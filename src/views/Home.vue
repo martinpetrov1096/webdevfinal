@@ -80,7 +80,7 @@ export default {
     },
     getRecommended: function() {
       axios({
-        url: "http://192.168.1.5:3000/autocomplete",
+        url: this.$serverUrl + "/autocomplete",
         method: "get",
         params: {
           "keyword": this.searchText
@@ -97,7 +97,7 @@ export default {
         "longitude": this.address.longitude
       }
       axios({
-        url: "http://192.168.1.5:3000/newGame",
+        url: this.$serverUrl + "/newGame",
         method: "post",
         data: payload
       })

@@ -10,7 +10,10 @@
 export default {
   name: "RestaurantCardRating",
   props: {
-    rating: Number
+    rating: {
+      type: Number,
+      default: 0
+    }
   },
   computed: {
     stars: function() {

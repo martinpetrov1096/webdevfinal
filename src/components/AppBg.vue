@@ -17,7 +17,6 @@ export default {
 </script>
 
 <style scoped>
-
 #app-bg {
     position: absolute;
     width: 100%;
@@ -31,7 +30,6 @@ export default {
   height: 100%;
   transition: all .5s ease-in-out;
   transition-delay: .2s;
-  /*transition-delay: .2s; */
 }
 .nill-bg {
   z-index: -2 !important;

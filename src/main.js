@@ -10,21 +10,18 @@ import Toasted from "vue-toasted";
 import "@/assets/css/reset.css";
 import "@/assets/css/global.css";
 
+let socket = Object;
+////////////////////////////////
+/////// GLOBAL VARIABLES ///////
+////////////////////////////////
+Vue.prototype.$http = Axios;
+Vue.prototype.$serverUrl = "http://192.168.1.5:8080";
 ////////////////////////////////
 ////// CONFIGURE SERVICES //////
 ////////////////////////////////
 Vue.config.productionTip = false
-
-
-Vue.prototype.$http = Axios;
-
 Vue.use(AsyncComputed);
-Vue.use(Toasted, {
- 
-});
-
-
-let socket = Object;
+Vue.use(Toasted);
 ////////////////////////////////
 ////// VUEX STORE CONFIG ///////
 ////////////////////////////////
@@ -115,7 +112,7 @@ const store = new Vuex.Store({
     gameJoin(context, joinCode) {
       context.commit("setGameState", 1);
       context.commit("setJoinCode", joinCode);
-      socket = io("http://192.168.1.5:3000",  {query: `joinCode=${joinCode}`});
+      socket = io( Vue.prototype.$serverUrl + "/",  {query: `joinCode=${joinCode}`});
       socket.emit("joinGame");
       
       socket.on("joinedGame", data => {
@@ -140,7 +137,7 @@ const store = new Vuex.Store({
         socket.disconnect();
       });
       socket.on("myerror", (data) => {
-        Vue.toasted.show(data, {
+        Vue.toasted.show(data + ". Going to main menu", {
           onComplete: function() {
             context.commit("setGameState", 0);
             context.commit("setVoteState", 0);
@@ -150,7 +147,7 @@ const store = new Vuex.Store({
           theme: "bubble",
           position: "bottom-right",
           className: "toast-err sec",
-          duration: 2000
+          duration: 1500
         });
       });
     },

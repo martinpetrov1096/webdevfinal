@@ -15,11 +15,9 @@
     background-color: #455a64 !important;
     color: white !important;
 }
-
 .sec {
     color: #FF616F !important;
 }
-
 .sec-bg {
     background-color: #FF616F !important;
     color: white !important;
@@ -85,7 +83,6 @@
 .invisible {
     visibility: hidden;
 }
-
 /*******************************/
 /******** Toasted Class ********/
 /*******************************/

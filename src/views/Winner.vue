@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="winner">
 
       <div class="win" 
         :class="{'invisible':!showWin,
@@ -7,7 +7,7 @@
         Winner
       </div>
 
-      <restaurant-card
+      <restaurant-card class="rest-card"
         :restaurant="$store.getters.current">
       </restaurant-card> 
       
@@ -17,7 +17,6 @@
       </h2>
 
   </div>
-
 </template>
 
 <script>
@@ -47,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+#winner {
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -55,6 +54,7 @@ export default {
 }
 
 .win {
+  flex-shrink: 1;
   color: white;
   font-size: 8vw;
 }
