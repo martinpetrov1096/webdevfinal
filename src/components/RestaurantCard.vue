@@ -91,7 +91,7 @@ export default {
   asyncComputed: {
     reviews: async function () {
       return await this.$http({
-        url: "http://localhost:3000/reviews",
+        url: "http://192.168.1.5:3000/reviews",
         methods: "get",
         params: {
           "id": this.restaurant.id

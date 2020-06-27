@@ -115,7 +115,7 @@ const store = new Vuex.Store({
     gameJoin(context, joinCode) {
       context.commit("setGameState", 1);
       context.commit("setJoinCode", joinCode);
-      socket = io("http://localhost:3000",  {query: `joinCode=${joinCode}`});
+      socket = io("http://192.168.1.5:3000",  {query: `joinCode=${joinCode}`});
       socket.emit("joinGame");
       
       socket.on("joinedGame", data => {
@@ -142,6 +142,9 @@ const store = new Vuex.Store({
       socket.on("myerror", (data) => {
         Vue.toasted.show(data, {
           onComplete: function() {
+            context.commit("setGameState", 0);
+            context.commit("setVoteState", 0);
+            context.commit("setBg", "red");
             router.push("/");
           },
           theme: "bubble",
@@ -154,6 +157,10 @@ const store = new Vuex.Store({
     gameStart(context) {
       context.commit("setGameState", 2);
       socket.emit("startGame");
+    },
+    gameDisconnect() {
+      socket.disconnect();
+      console.log("In disconnect");
     },
     voteNo(context) {
       setTimeout(() => {

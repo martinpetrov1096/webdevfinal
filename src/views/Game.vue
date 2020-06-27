@@ -52,8 +52,11 @@ export default {
       return this.$store.getters.voteState != 0;
     }
   }, 
-  mounted: function() {
-     this.$store.dispatch("gameJoin", this.$route.params.joinCode);
+  created: function() {
+    this.$store.dispatch("gameJoin", this.$route.params.joinCode);
+    window.onbeforeunload = function() {
+      this.$store.dispatch("gameDisconnect");
+    } 
   }
   
 };
