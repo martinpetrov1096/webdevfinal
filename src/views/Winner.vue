@@ -12,7 +12,7 @@
       </restaurant-card> 
       
       <h2 class="new-game btn btn-rect-lg prim-bg"
-        @click="$store.dispatch('gameReset')"> 
+        @click="reset"> 
         New Game 
       </h2>
 
@@ -30,6 +30,12 @@ export default {
   data() {
     return {
       showWin: false
+    }
+  },
+  methods: {
+    reset: function() {
+      this.$store.dispatch('gameReset');
+      this.$router.push("/");
     }
   },
   mounted() {

@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <transition
-      name="slide-roll"> 
+      name="slide-fade"
+      mode="out-in"> 
 
       <div class="game"
         v-if="$store.getters.gameState==2 && $store.getters.current != undefined"
@@ -21,16 +22,11 @@
         </btn-heart> 
 
       </div>
-
-      <div class="lobby"
+      <game-lobby
         v-else
         key="lobby">
-        <h3>Share this url with friends </h3> 
-        <div class="startBtn"
-          @click="$store.dispatch('gameStart')">
-        </div>
-        <h3>Click start when they have all joined</h3> 
-      </div>
+      </game-lobby>
+
 
     </transition>
   </div>
@@ -41,19 +37,24 @@
 import BtnHeart from "@/components/BtnHeart.vue";
 import BtnReject from "@/components/BtnReject.vue";
 import RestaurantCard from "@/components/RestaurantCard.vue";
+import GameLobby from "@/components/GameLobby.vue";
 
 export default {
   name: "Game",
   components : {
     BtnHeart, 
     BtnReject,
-    RestaurantCard
+    RestaurantCard,
+    GameLobby
   },
   computed: {
     voteSubmitted: function() {
       return this.$store.getters.voteState != 0;
     }
-  },
+  }, 
+  mounted: function() {
+     this.$store.dispatch("gameJoin", this.$route.params.joinCode);
+  }
   
 };
 </script>
@@ -69,33 +70,7 @@ export default {
   align-items: center;
 }
 
-.lobby {
-  width: 300px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.lobby h3 {
-  color: white;
-  font-size: 18px;
-}
-
-.startBtn {
-  color: white;
-  font-size: 120px;
-  transition: all .1s ease-in;
-  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-}
-.startBtn:hover {
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
-}
-.startBtn::before {
-  text-align: center;
-  font-family: "FontAwesome";
-  content: '\f144';
-}
 
 .game {
   height: inherit;

@@ -80,7 +80,7 @@ export default {
     },
     getRecommended: function() {
       axios({
-        url: "https://cors-anywhere.herokuapp.com/https://picayune-responsible-jackfruit.glitch.me/autocomplete",
+        url: "http://localhost:3000/autocomplete",
         method: "get",
         params: {
           "keyword": this.searchText
@@ -97,7 +97,7 @@ export default {
         "longitude": this.address.longitude
       }
       axios({
-        url: "https://cors-anywhere.herokuapp.com/https://picayune-responsible-jackfruit.glitch.me/newGame",
+        url: "http://localhost:3000/newGame",
         method: "post",
         data: payload
       })
@@ -110,7 +110,7 @@ export default {
       });
     },
     joinGame() {
-      this.$store.dispatch("gameJoin", this.joinCode);
+      this.$router.push("/game/" + this.joinCode);
     }
   }
 }

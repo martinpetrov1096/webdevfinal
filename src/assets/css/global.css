@@ -9,20 +9,20 @@
 /********* THEME COLORS ********/
 /*******************************/
 .prim {
-    color: #455a64;
+    color: #455a64 !important;
 }
 .prim-bg {
-    background-color: #455a64;
-    color: white;
+    background-color: #455a64 !important;
+    color: white !important;
 }
 
 .sec {
-    color: #FF616F;
+    color: #FF616F !important;
 }
 
 .sec-bg {
-    background-color: #FF616F;
-    color: white;
+    background-color: #FF616F !important;
+    color: white !important;
 
 }
 /*******************************/
@@ -84,6 +84,18 @@
 
 .invisible {
     visibility: hidden;
+}
+
+/*******************************/
+/******** Toasted Class ********/
+/*******************************/
+.toast-err {
+    font-family: Lato; 
+    background-color: #f5f5f5 !important;
+}
+.toast-suc {
+    font-family: Lato; 
+    background-color: #37DB73 !important;
 }
 
 /*******************************/

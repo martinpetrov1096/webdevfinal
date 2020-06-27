@@ -1,6 +1,7 @@
 
 <template>
   <div id="restaurantCard" class="card-lg shadow-l"
+  v-if="restaurant!=null"
     :class="{ 
       'no': submitted==1 && submitClass==true,
       'yes': submitted==2 && submitClass==true,
@@ -27,7 +28,7 @@
           <div class="price">{{restaurant.price}}</div>
         </div>
 
-        <div class="address"> {{address}} </div>
+        <div class="address"> {{this.restaurant.location.address1}} </div>
            
         <restaurant-rating
           :rating="restaurant.rating">
@@ -72,7 +73,10 @@ export default {
     RestaurantRating
   },
   props: {
-    restaurant : Object,
+    restaurant : {
+
+      Object
+    },
     submitted: Number
   },
   data() {
@@ -83,15 +87,11 @@ export default {
     }
   },
   computed: {
-    address: function() {
-      return this.restaurant.location.display_address1;
-    },
-    
   },
   asyncComputed: {
     reviews: async function () {
       return await this.$http({
-        url: "https://cors-anywhere.herokuapp.com/https://picayune-responsible-jackfruit.glitch.me/reviews",
+        url: "http://localhost:3000/reviews",
         methods: "get",
         params: {
           "id": this.restaurant.id

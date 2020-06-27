@@ -5,7 +5,9 @@
 
     <app-bg class="bg"></app-bg>
     <transition name="slide-fade" mode="out-in">
-      <router-view class="view"></router-view >
+      <router-view class="view"
+        :key="$route.fullPath">
+      </router-view >
     </transition>
   </div>
 </template>
