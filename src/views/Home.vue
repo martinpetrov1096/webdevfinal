@@ -1,12 +1,22 @@
 <template>
   <div id="home">
-
+    <div class="about">
+      <h3>Created By 
+        <a class="author-name" href="https://www.linkedin.com/in/martin-petrov-5062aa160/">
+            Martin Petrov
+        </a> 
+        and 
+        <a class="author-name" href="https://github.com/rzahmed">
+          Raza Ahmed
+        </a>
+      </h3>
+    </div>
     <h1 class="title">Restaurant Tinder</h1>
     <div class="container card-sm shadow-l">
 
       <div class="joinGame">
         <input
-          placeholder="Enter Code" 
+          placeholder="Enter Join Code" 
           v-model="joinCode"
           type="text">
         <h2 class="btn btn-rect-sm prim-bg"
@@ -20,7 +30,7 @@
       <div class="createGame">
 
         <div class="searchBar">
-          <input type="text" placeholder="Enter Keywords"
+          <input type="text" placeholder="Enter Food Categories"
             v-model="searchText"
             list="terms"
             @keyup="getRecommended"/>
@@ -40,7 +50,7 @@
           ref="address"
 
           classname="form-control"
-          placeholder="Location"
+          placeholder="Enter Location"
           country="us"
           types= "(cities)"
           >
@@ -54,6 +64,7 @@
       </div>
 
     </div>
+
 
   </div>
 </template>
@@ -120,7 +131,7 @@ export default {
 #home {
   display: flex;
   flex-flow: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -172,6 +183,19 @@ input > * {
 }
 
 .about {
-  align-self: flex-start;
+  align-self: stretch;
+  padding: 10px;
+
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  
+}
+
+.author-name {
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  color: white;
 }
 </style>

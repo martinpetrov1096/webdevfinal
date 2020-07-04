@@ -15,7 +15,7 @@ let socket = Object;
 /////// GLOBAL VARIABLES ///////
 ////////////////////////////////
 Vue.prototype.$http = Axios;
-Vue.prototype.$serverUrl = "http://192.168.1.5:8080";
+Vue.prototype.$serverUrl = "";
 ////////////////////////////////
 ////// CONFIGURE SERVICES //////
 ////////////////////////////////
