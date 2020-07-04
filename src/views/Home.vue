@@ -1,6 +1,9 @@
 <template>
   <div id="home">
-    <div class="about">
+    
+    <div class="title">
+      <h1>Restaurant Tinder</h1>
+      <div class="about">
       <h3>Created By 
         <a class="author-name" href="https://www.linkedin.com/in/martin-petrov-5062aa160/">
             Martin Petrov
@@ -11,7 +14,7 @@
         </a>
       </h3>
     </div>
-    <h1 class="title">Restaurant Tinder</h1>
+    </div>
     <div class="container card-sm shadow-l">
 
       <div class="joinGame">
@@ -131,7 +134,7 @@ export default {
 #home {
   display: flex;
   flex-flow: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
@@ -140,6 +143,26 @@ export default {
   flex-shrink: 2;
   font-size: 10vw;
   color: white;
+}
+.about {
+  flex-basis: 0;
+  flex-grow: 0;
+  align-self: stretch;
+  padding: 10px;
+
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  
+}
+.author-name {
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  color: white;
+}
+.author-name:hover {
+  text-decoration: underline;
 }
 
 .container {
@@ -180,22 +203,5 @@ input {
 input > * {
   margin: 0;
   padding: 0;
-}
-
-.about {
-  align-self: stretch;
-  padding: 10px;
-
-  font-size: 14px;
-  color: white;
-  text-align: center;
-  
-}
-
-.author-name {
-  font-weight: bold;
-  font-size: 18px;
-  text-decoration: none;
-  color: white;
 }
 </style>
